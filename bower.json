@@ -1,18 +1,24 @@
 {
-  "name": "cr-angular-test",
-  "description": "test",
+  "name": "angular-test",
+  "description": "",
   "main": "app.js",
-  "authors": [
-    "Alex BOndarenko"
-  ],
-  "license": "ISC",
-  "homepage": "https://github.com/lifter21/cr-ng-test",
   "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
+    "public/libs",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-ui-router": "^0.2.18",
+    "angular-resource": "^1.5.0",
+    "bootstrap": "^3.3.6",
+    "angular-bootstrap": "^1.2.1",
+    "bootstrap-material-design": "^0.5.9"
+  }
 }

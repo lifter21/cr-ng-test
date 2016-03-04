@@ -1,19 +1,21 @@
 {
-  "name": "cr-angular-test",
+  "name": "angular-test",
   "version": "1.0.0",
-  "description": "test",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lifter21/cr-ng-test.git"
-  },
-  "author": "Alex BOndarenko",
+  "author": "Alex Bondarenko",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lifter21/cr-ng-test/issues"
-  },
-  "homepage": "https://github.com/lifter21/cr-ng-test#readme"
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-form": "^0.12.4",
+    "express-session": "^1.13.0",
+    "lodash": "^4.6.1",
+    "mongoose": "^4.4.6",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "plus.application": "^1.1.2"
+  }
 }
