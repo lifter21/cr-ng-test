@@ -53,18 +53,18 @@ app.use(function (err, req, res, next) {
   next(err)
 });
 
-// send SPA (html5mode: on) index.html on every request
+//// hanlde unknown routes and XHR
+//app.use(function (req, res) {
+//  if (req.xhr) {
+//    return res.sendStatus(404);
+//  }
+//
+//  return res.sendStatus(404);
+//});
+
+// send SPA (html5mode: on) index.html on every rrequest
 app.use('/', function (req, res) {
   res.sendFile(__dirname + '/app.public/index.html');
-});
-
-// hanlde unknown routes and XHR
-app.use(function (req, res) {
-  if (req.xhr) {
-    return res.sendStatus(404);
-  }
-
-  return res.sendStatus(404);
 });
 
 app.listen(port, function(){
