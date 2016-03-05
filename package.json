@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "",
+    "start": "nodemon app.js -L -i public/ -i node_modules/"
   },
   "author": "Alex Bondarenko",
   "license": "ISC",
