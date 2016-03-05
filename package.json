@@ -5,11 +5,13 @@
   "main": "app.js",
   "scripts": {
     "test": "",
-    "start": "nodemon app.js -L -i public/ -i node_modules/"
+    "start": "nodemon app.js -L -i app.public/ -i node_modules/"
   },
   "author": "Alex Bondarenko",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.0",
+    "connect-mongo": "^1.1.0",
     "express": "^4.13.4",
     "express-form": "^0.12.4",
     "express-session": "^1.13.0",

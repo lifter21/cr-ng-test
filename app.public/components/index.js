@@ -9,7 +9,7 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
 
         $httpProvider.interceptors.push('HttpInterceptor');
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/homes');
 
         $stateProvider
             .state('app', {

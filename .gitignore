@@ -4,4 +4,4 @@ idea/
 .vagrant/
 Vagrantfile
 *.log
-public/libs/
+app.public/libs/

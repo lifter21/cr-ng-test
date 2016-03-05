@@ -1,18 +1,15 @@
 {
   "app": {
-    "port": 3000
+    "port": 4000
   },
   "session": {
     "secret": "xxx"
   },
   "host": {
-    "url": "http://localhost:3000"
-  },
-  "tokenizer": {
-    "secret": "xxx"
+    "url": "http://localhost:4000"
   },
   "mongo": {
-    "uri": "mongodb://localhost/ng-test",
+    "uri": "mongodb://localhost/ng-test-gym",
     "debug": false
   },
   "facebookAuth": {
