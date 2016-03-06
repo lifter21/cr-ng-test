@@ -1,9 +1,10 @@
 'use strict';
 
 module.exports = function (app, passport) {
+  var faker = require('faker');
   var Users = app.container.get('Users');
   var Config = app.config;
-  var faker = require('faker');
+  var Host = Config.get('host:url');
 
   var LocalStrategy = require('passport-local').Strategy,
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
@@ -44,10 +45,11 @@ module.exports = function (app, passport) {
   }));
 
 //  FACEBOOK STRATEGY
+
   passport.use(new FacebookStrategy({
       clientID: Config.get('facebookAuth:clientID'),
       clientSecret: Config.get('facebookAuth:clientSecret'),
-      callbackURL: (Config.get('host:url') + Config.get('facebookAuth:callbackURL')),
+      callbackURL: Host + Config.get('facebookAuth:callbackURL'),
       profileFields: ['id', 'displayName', 'emails'],
       passReqToCallback: true
     },
@@ -72,8 +74,8 @@ module.exports = function (app, passport) {
               'facebook.id': profile.id,
               'facebook.token': accessToken,
               'facebook.email': profile.emails[0].value,
-              firstname: profile.displayName.split(' ')[0],
-              lastname: profile.displayName.split(' ')[1],
+              'firstname': profile.displayName.split(' ')[0],
+              'lastname': profile.displayName.split(' ')[1],
               'local.name': faker.internet.userName(),
               'local.password': faker.internet.password(),
               email: profile.emails[0].value
@@ -96,10 +98,11 @@ module.exports = function (app, passport) {
               if (err) {
                 return done(err);
               }
-              return done(null, _user)
+
+              return done(null, _user);
             })
           } else {
-            return done(null, user)
+            return done(null, user);
           }
         })
 
@@ -124,5 +127,81 @@ module.exports = function (app, passport) {
 
 //  GOOGLE STRATEGY
 
+  passport.use(new GoogleStrategy({
+      clientID: Config.get('googleAuth:clientID'),
+      clientSecret: Config.get('googleAuth:clientSecret'),
+      callbackURL: Host + Config.get('googleAuth:callbackURL'),
+      passReqToCallback: true
+    },
+    function (req, accessToken, refreshToken, profile, done) {
+      if (!req.user) {
+        var query = {
+          $or: [
+            {'google.id': profile.id},
+            {'google.email': profile.emails[0].value},
+            {'email': profile.emails[0].value}
+          ]
+        };
 
+        Users.findOne(query, function (err, user) {
+          if (err) {
+            return done(err);
+          }
+
+          if (!user) {
+
+            var newUser = new Users();
+            newUser.google.id = profile.id;
+            newUser.google.token = accessToken;
+            newUser.google.email = profile.emails[0].value;
+            newUser.email = profile.emails[0].value;
+            newUser.firstname = profile.displayName.split(' ')[0];
+            newUser.lastname = profile.displayName.split(' ')[1];
+            newUser.local.name = faker.internet.userName();
+            newUser.local.password = faker.internet.password();
+
+            newUser.save(function (err, _user) {
+              if (err) {
+                return done(err);
+              }
+
+              return done(err, _user);
+            });
+          }
+
+          if (user && !user.google.id) {
+            user.google.id = profile.id;
+            user.google.email = profile.emails[0].value;
+            user.google.token = accessToken;
+            user.save(function (err, _user) {
+              if (err) {
+                return done(err);
+              }
+
+              return done(null, _user);
+            })
+          } else {
+            return done(null, user);
+          }
+        });
+      } else {
+
+        req.user.google.id = profile.id;
+        req.user.google.token = accessToken;
+        req.user.google.email = profile.emails[0].value;
+        req.user.email = req.user.email || profile.emails[0].value;
+        req.user.firstname = req.user.firstname || profile.displayName.split(' ')[0];
+        req.user.lastname = req.user.lastname || profile.displayName.split(' ')[1];
+
+        req.user.save(function (err) {
+          if (err) {
+            return done(err);
+          }
+
+          return done(err, req.user);
+        });
+      }
+
+    }
+  ));
 };

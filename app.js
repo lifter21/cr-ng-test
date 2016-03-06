@@ -47,20 +47,6 @@ require('./app.config/passport')(app, passport);
 // app routes
 require('./app.routes')(app, passport);
 
-app.use(function (req, res, next) {
-  console.log(req.url);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-
-  if ('OPTIONS' === req.method) {
-    res.status(200).end();
-  } else {
-    next();
-  }
-});
-
 // send SPA (html5mode: on) index.html on every request
 //app.use('/', function (req, res, next) {
 //  res.sendFile(__dirname + '/app.public/index.html');
@@ -75,6 +61,7 @@ app.use(function (err, req, res, next) {
 //app.use('*', function(req, res, next) {
 //  res.status(404).send('Sorry cant find that!');
 //});
+
 // hanlde unknown routes and XHR
 app.use(function (req, res) {
   if (req.xhr) {

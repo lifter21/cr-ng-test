@@ -76,7 +76,7 @@ module.exports = function (app, passport) {
         'local.name': req.form.username,
         'local.password': req.form.password
       });
-      user.save(function (err, user) {
+      user.save(function (err, _user) {
         if (err) {
           return next(err);
         }
@@ -84,7 +84,7 @@ module.exports = function (app, passport) {
         user.local.passwordSalt = undefined;
         user.local.passwordHash = undefined;
 
-        res.json(user);
+        return res.json(_user);
       })
     } else {
       res.status(400).json(req.form.getErrors())

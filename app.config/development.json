@@ -13,13 +13,13 @@
     "debug": false
   },
   "facebookAuth": {
-    "clientID": "258841094447027",
-    "clientSecret": "fb52932451b6a7f6a0cc3fc49321d070",
+    "clientID": "230287063984407",
+    "clientSecret": "f55213afb2a1df98f4a1c8ff54f6bbdb",
     "callbackURL": "/auth/facebook/callback"
   },
   "googleAuth": {
-    "clientID": "77549203152-2t9p3k45r7n7mbh4ikd8h8qt5dtmq2hj.apps.googleusercontent.com",
-    "clientSecret": "b6eI5eW-7Xn3nDcrh_IVenOd",
+    "clientID": "860542696236-u7ve664i9ltdicbeqof6dmu33k37see5.apps.googleusercontent.com",
+    "clientSecret": "X4U2WRpteDBNZeKm8sQ7DrJT",
     "callbackURL": "/auth/google/callback"
   }
 }

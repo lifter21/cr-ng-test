@@ -45,6 +45,11 @@ var UserSchema = new Schema({
     email: String,
     token: String
   },
+  google: {
+    id: String,
+    email: String,
+    token: String
+  },
   createdAt: {
     type: Date,
     default: Date.now
