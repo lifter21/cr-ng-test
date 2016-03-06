@@ -1,7 +1,7 @@
 module.exports = function (app, passport) {
   'use strict';
 //  include routes here
-  require('./auth')(app, passport);
-  require('./users')();
-  require('./items');
+  require('./api/auth')(app, passport);
+  require('./api/users')();
+  require('./api/items');
 };

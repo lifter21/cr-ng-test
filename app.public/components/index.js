@@ -2,10 +2,10 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
     $.material.init();
 
-    $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
-    });
+    //$locationProvider.html5Mode({
+    //  enabled: true,
+    //  requireBase: false
+    //});
 
     $httpProvider.interceptors.push('HttpInterceptor');
 
@@ -72,11 +72,12 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
         // do something on error
         var $state = $injector.get('$state');
         var isPublicState = _.includes(pub_states, $state.current.url);
+        
         if (rejection.status == 401 && !isPublicState) {
           return $state.go('app.login');
         }
 
-        if (rejection.status == 404) {
+        if (rejection.status === 404) {
           return $state.go('app.404');
         }
         

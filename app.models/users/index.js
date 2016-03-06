@@ -12,12 +12,10 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
   // possible fields: [rating, birthday, avatar, etc]
   firstname: {
-    type: String,
-    required: true
+    type: String
   },
   lastname: {
-    type: String,
-    required: true
+    type: String
   },
   email: {
     type: String,
@@ -30,7 +28,7 @@ var UserSchema = new Schema({
   role: {
     type: Array,
     required: true,
-    default: ['trainee']
+    default: ['']
   },
   local: {
     name: {
@@ -41,6 +39,11 @@ var UserSchema = new Schema({
     },
     passwordHash: String,
     passwordSalt: String
+  },
+  facebook: {
+    id: String,
+    email: String,
+    token: String
   },
   createdAt: {
     type: Date,

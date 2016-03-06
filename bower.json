@@ -20,6 +20,7 @@
     "bootstrap": "^3.3.6",
     "angular-bootstrap": "^1.2.1",
     "bootstrap-material-design": "^0.5.9",
-    "lodash": "^4.6.1"
+    "lodash": "^4.6.1",
+    "font-awesome": "^4.5.0"
   }
 }

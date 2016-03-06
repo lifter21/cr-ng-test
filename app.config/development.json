@@ -9,12 +9,17 @@
     "url": "http://localhost:4000"
   },
   "mongo": {
-    "uri": "mongodb://localhost/ng-test-gym",
+    "uri": "mongodb://localhost/ng-test-dev",
     "debug": false
   },
   "facebookAuth": {
-    "clientID": "",
-    "clientSecret": "",
+    "clientID": "258841094447027",
+    "clientSecret": "fb52932451b6a7f6a0cc3fc49321d070",
     "callbackURL": "/auth/facebook/callback"
+  },
+  "googleAuth": {
+    "clientID": "77549203152-2t9p3k45r7n7mbh4ikd8h8qt5dtmq2hj.apps.googleusercontent.com",
+    "clientSecret": "b6eI5eW-7Xn3nDcrh_IVenOd",
+    "callbackURL": "/auth/google/callback"
   }
 }

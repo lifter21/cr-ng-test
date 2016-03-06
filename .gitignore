@@ -1,7 +1,7 @@
 node_modules/
-idea/
 .idea/
 .vagrant/
+/data
 Vagrantfile
 *.log
 app.public/libs/

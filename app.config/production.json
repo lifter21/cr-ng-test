@@ -9,7 +9,7 @@
     "url": "http://localhost:4000"
   },
   "mongo": {
-    "uri": "mongodb://localhost/gym",
+    "uri": "mongodb://localhost/ng-test-prod",
     "debug": false
   },
   "fixtures": {
@@ -19,5 +19,10 @@
     "clientID": "",
     "clientSecret": "",
     "callbackURL": "/auth/facebook/callback"
+  },
+  "googleAuth": {
+    "clientID": "",
+    "clientSecret": "",
+    "callbackURL": "/auth/google/callback"
   }
 }
