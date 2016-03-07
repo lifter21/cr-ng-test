@@ -30,6 +30,15 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
           }
         }
       })
+      .state('app.index', {
+        url: '/index',
+        views: {
+          '@': {
+            templateUrl: '/components/mainPage/mainPage.html',
+            controller: 'MainPageController'
+          }
+        }
+      })
       .state('app.registration', {
         url: '/registration',
         views: {
@@ -53,6 +62,15 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
         views: {
           '@': {
             controller: 'LogoutController'
+          }
+        }
+      })
+      .state('app.me', {
+        url: '/profile',
+        views: {
+          '@': {
+            templateUrl: '/components/profile/profile.html',
+            controller: 'ProfileController'
           }
         }
       })

@@ -2,16 +2,10 @@ app
   .controller('LoginController', function ($scope, $state, AuthService) {
     $scope.user = {};
 
-    $scope.connect = function () {
-      facebook.get(function (resp) {
-        console.log(resp);
-      });
-    };
-
     $scope.login = function () {
-      AuthService.login($scope.user.username, $scope.user.password)
+      AuthService.login($scope.user)
         .then(function (user) {
-          $state.go('app.home');
+          $state.go('app.index');
         }, function (err) {
           $scope.loginError = err.data.loginError;
         });
@@ -26,7 +20,4 @@ app
     $scope.AuthService = AuthService;
     $scope.AuthService.me();
   })
-//  .factory('facebook', function ($resource) {
-//    return $resource('/auth/facebook');
-//  })
-//;
+;

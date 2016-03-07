@@ -4,6 +4,8 @@
       <form ng-submit='register()' novalidate class="">
         <legend>New user registration</legend>
 
+        <!--TODO: add ng-validate-->
+
         <div class="form-group">
           <label for="username">Your login</label>
           <input class="form-control" id="username" ng-model='user.username' placeholder="login..." required
@@ -28,6 +30,8 @@
           <input class="form-control" id="email" ng-model='user.email' placeholder="E-mail..." required type="email">
           <span class="text-danger" ng-repeat='emailError in formErrors.email'>{{emailError}}<br/></span>
         </div>
+
+        <!-- TODO: add phone number-->
 
         <div class="form-group">
           <label for="password">Password</label>

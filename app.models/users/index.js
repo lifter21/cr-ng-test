@@ -9,6 +9,7 @@ var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 var Schema = mongoose.Schema;
 
+// TODO: add phone number
 var UserSchema = new Schema({
   // possible fields: [rating, birthday, avatar, etc]
   firstname: {
@@ -28,7 +29,7 @@ var UserSchema = new Schema({
   role: {
     type: Array,
     required: true,
-    default: ['']
+    default: ['user']
   },
   local: {
     name: {
@@ -82,7 +83,7 @@ UserSchema.methods = {
     this.local.passwordHash = hash(this.local.passwordSalt + password);
   }
 };
-
+// TODO: add FB and  GOOGLE virtuals for displaying status in profile
 UserSchema.virtual('local.password').set(function(password) {
   this.setPassword(password);
 });

@@ -25,19 +25,26 @@ module.exports = function (app, passport) {
       next(null);
     });
   };
-
+  // TODO: add phone number
   var UserForm = form(
-    field('firstname').trim(),
-    field('lastname').trim(),
+    field('firstname').trim().maxLength(255),
+    field('lastname').trim().maxLength(255),
     field('username').trim().required().custom(checkExistance, 'Such login is already used...'),
     field('email').trim().isEmail().required().custom(checkExistance),
-    field('password').trim().required().minLength(3),
+    field('password').trim().required().minLength(6).maxLength(16).is("[a-zA-Z0-9]"),
     field('passConfirmation').trim().equals('field::password', "Password confirmation doesn't equal to password! ")
   );
 
   //------------------------------------------LOCAL------------------------------------------
 
-  app.post('/api/login', passport.authenticate('local', {
+  app.post('/api/login', function (req, res, next) {
+    var remember = req.body.remember || false;
+    if (remember) {
+      req.session.cookie.expires = false;
+    }
+
+    next();
+  }, passport.authenticate('local', {
     successRedirect: '/api/users/me',
     failureRedirect: '/api/unauthorized'
   }));
