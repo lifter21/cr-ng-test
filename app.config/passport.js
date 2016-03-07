@@ -15,7 +15,7 @@ module.exports = function (app, passport) {
   });
 
   passport.deserializeUser(function (id, done) {
-    Users.findById(id, '-local.passwordHash -local.passwordSalt', function (err, user) {
+    Users.findById(id, '-local.passwordHash -local.passwordSalt -facebook -google', function (err, user) {
       done(err, user);
     });
   });
@@ -27,7 +27,7 @@ module.exports = function (app, passport) {
       $or: [{
         'email': username
       }, {
-        'local.name': username
+        'username': username
       }]
     };
 
@@ -44,6 +44,7 @@ module.exports = function (app, passport) {
     })
   }));
 
+//  TODO: refactor it
 //  FACEBOOK STRATEGY
 
   passport.use(new FacebookStrategy({
@@ -55,7 +56,7 @@ module.exports = function (app, passport) {
     },
     function (req, accessToken, refreshToken, profile, done) {
       if (!req.user) {
-
+        console.log(profile);
         var query = {
           $or: [
             {'facebook.id': profile.id},
@@ -76,7 +77,7 @@ module.exports = function (app, passport) {
               'facebook.email': profile.emails[0].value,
               'firstname': profile.displayName.split(' ')[0],
               'lastname': profile.displayName.split(' ')[1],
-              'local.name': faker.internet.userName(),
+              'username': faker.internet.userName(),
               'local.password': faker.internet.password(),
               email: profile.emails[0].value
             });
@@ -157,7 +158,7 @@ module.exports = function (app, passport) {
             newUser.email = profile.emails[0].value;
             newUser.firstname = profile.displayName.split(' ')[0];
             newUser.lastname = profile.displayName.split(' ')[1];
-            newUser.local.name = faker.internet.userName();
+            newUser.username = faker.internet.userName();
             newUser.local.password = faker.internet.password();
 
             newUser.save(function (err, _user) {

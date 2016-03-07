@@ -20,6 +20,9 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
             controller: 'AuthPanelController',
             templateUrl: '/components/auth/authPanel.html'
           }
+        },
+        data: {
+          pageTitleFirst: 'Angular Test - '
         }
       })
       .state('app.home', {
@@ -28,6 +31,9 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
           '@': {
             templateUrl: '/components/home/home.html'
           }
+        },
+        data: {
+          pageTitle: 'Home'
         }
       })
       .state('app.index', {
@@ -36,8 +42,11 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
           '@': {
             templateUrl: '/components/mainPage/mainPage.html',
             controller: 'MainPageController'
+          },
+          data: {
+            pageTitle: 'Main'
           }
-        }
+        },
       })
       .state('app.registration', {
         url: '/registration',
@@ -46,6 +55,9 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
             controller: 'UserRegistrationController',
             templateUrl: '/components/userRegistration/registrationForm.html'
           }
+        },
+        data: {
+          pageTitle: 'Registration'
         }
       })
       .state('app.login', {
@@ -55,6 +67,9 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
             controller: 'LoginController',
             templateUrl: '/components/auth/loginForm.html'
           }
+        },
+        data: {
+          pageTitle: 'Login'
         }
       })
       .state('app.logout', {
@@ -72,6 +87,9 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
             templateUrl: '/components/profile/profile.html',
             controller: 'ProfileController'
           }
+        },
+        data: {
+          pageTitle: 'Profile'
         }
       })
       .state('app.404', {
@@ -80,6 +98,9 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
           '@': {
             templateUrl: '/components/pages/pageNotFound.html'
           }
+        },
+        data: {
+          pageTitle: 'Page Not Found'
         }
       })
   })

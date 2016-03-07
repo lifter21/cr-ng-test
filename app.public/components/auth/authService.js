@@ -17,7 +17,7 @@ app
           password: user.password,
           remember: user.remember
         }, function (user) {
-          self.user = user
+          self.user = user;
           console.log(user, ' logged in');
           return user;
         }, function (err) {
@@ -37,7 +37,7 @@ app
         return !!self.user;
       },
       me: function () {
-        Me.get(function (user) {
+        return Me.get(function (user) {
           if (user.hasOwnProperty('local')) {
             self.user = user;
           }

@@ -1,6 +1,8 @@
+<!--TODO: move to directive-->
+
 <ul class="nav navbar-nav navbar-right">
     <li ui-sref-active="active">
-        <a  ng-if="AuthService.isUser()">{{AuthService.user.username}}</a>
+        <a  ng-if="AuthService.isUser()">{{AuthService.user.fullName}}</a>
     </li>
     <li ui-sref-active="active">
         <a  ng-if="AuthService.isUser()" ui-sref="app.me">

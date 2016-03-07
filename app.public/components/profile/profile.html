@@ -1,27 +1,17 @@
 <div class="panel panel-default">
-	<!-- Default panel contents -->
-	<div class="panel-heading">Panel heading</div>
-    <div class="panel-body">
-        <p>Panel body ...</p>
-    </div>
+  <!-- Default panel contents -->
+  <div class="panel-heading">Profile settings</div>
 
-    <!-- Table -->
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Table Heading 1</th>
-            </tr>
-            <tr>
-                <th>Table Heading 2</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Table Content 1</td>
-            </tr>
-            <tr>
-                <td>Table Content 2</td>
-            </tr>
-        </tbody>
-    </table>
+  <div class="panel-body">
+    <h3>{{user.fullName}}</h3>
+    <hr/>
+
+    <!-- Edit profile -->
+    <div class="col-md-8 col-md-offset-2">
+      <legend>Edit profile</legend>
+      <div user-form user="user"></div>
+
+    </div>
+  </div>
+
 </div>
