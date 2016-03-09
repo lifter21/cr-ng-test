@@ -2,50 +2,104 @@
 
   <!--TODO: add ng-validate-->
 
-  <div class="form-group">
-    <label for="username">Your login</label>
-    <input class="form-control" id="username" ng-model='user.username' placeholder="login..." required
-           type="text">
-    <span class="text-danger" ng-repeat='nameError in formErrors.username'>{{nameError}}<br/></span>
+  <div class="form-group label-floating" ng-class="{'is-empty': !user.username}">
+    <label class="control-label">Your login</label>
+
+    <div ng-if="!user._id">
+      <input type="text" class="form-control" ng-model='user.username' required>
+    </div>
+
+    <div ng-if="user._id">
+      <input type="text" class="form-control disabled" ng-model='user.username' required>
+    </div>
+
+    <p class="text-danger" ng-if="formErrors.username" ng-repeat='nameError in formErrors.username'>{{nameError}}<br/>
+    </p>
+    <span class="material-input"></span>
   </div>
 
-  <div class="form-group">
-    <label for="firstname">First name</label>
-    <input class="form-control" id="firstname" ng-model='user.firstname' placeholder="firstname..." required
-           type="text">
+  <div class="form-group label-floating" ng-class="{'is-empty': !user.username}">
+    <label class="control-label">First name</label>
+    <input class="form-control" ng-model='user.firstname' type="text">
+    <span class="material-input"></span>
   </div>
 
-  <div class="form-group">
-    <label for="lastname">Last name</label>
-    <input class="form-control" id="lastname" ng-model='user.lastname' placeholder="lastname..." required
-           type="text">
+  <div class="form-group label-floating" ng-class="{'is-empty': !user.lastname}">
+    <label class="control-label">Last name</label>
+    <input class="form-control" ng-model='user.lastname' type="text">
+    <span class="material-input"></span>
   </div>
 
-  <div class="form-group">
-    <label for="email">E-mail</label>
-    <input class="form-control" id="email" ng-model='user.email' placeholder="E-mail..." required type="email">
-    <span class="text-danger" ng-repeat='emailError in formErrors.email'>{{emailError}}<br/></span>
+  <div class="form-group label-floating" ng-class="{'is-empty': !user.email}">
+    <label class="control-label">E-mail...</label>
+    <input type="email" class="form-control" ng-model='user.email' required>
+
+    <p class="help-block">A valid email contains an @ character</p><br>
+    <span class="text-danger" ng-if="formErrors.email"
+          ng-repeat='emailError in formErrors.email'>{{emailError}}<br/>
+    </span>
+    <span class="material-input"></span>
   </div>
 
-  <div class="form-group">
-    <label for="phone">Phone (+380XXXXXXXXX)</label>
-    <input class="form-control" id="phone" ng-model='user.phone' placeholder="Phone..." required type="string">
-    <span class="text-danger" ng-repeat='phoneError in formErrors.phone'>{{phoneError}}<br/></span>
+  <div class="form-group label-floating" ng-class="{'is-empty': !user.phone}">
+    <label class="control-label">Phone</label>
+    <input class="form-control" ng-model='user.phone' required type="string">
+
+    <p class="help-block">phone format: +380XXXXXXXXX</p>
+    <span class="text-danger" ng-if="formErrors.phone"
+          ng-repeat='phoneError in formErrors.phone'>
+      {{phoneError}}<br/>
+    </span>
+    <span class="material-input"></span>
   </div>
 
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input class="form-control" id="password" ng-model='user.password' placeholder="Password..." required
-           type="password">
-    <span class="text-danger" ng-repeat='passError in formErrors.password'>{{passError}}<br/></span>
+  <div ng-if="!user._id">
+    <div class="form-group label-floating is-empty">
+      <label class="control-label">Password</label>
+      <input class="form-control" ng-model='user.password' required type="password">
+      <span class="text-danger" ng-if="formErrors.password" ng-repeat='passError in formErrors.password'>
+        {{passError}}<br/>
+      </span>
+      <span class="material-input"></span>
+    </div>
+
+    <div class="form-group label-floating is-empty">
+      <label class="control-label">Password confirmation</label>
+      <input class="form-control" ng-model='user.passConfirmation' required type="password">
+      <span class="text-danger" ng-if="formErrors.passConfirmation"
+            ng-repeat='confError in formErrors.passConfirmation'>
+        {{confError}}<br/>
+      </span>
+      <span class="material-input"></span>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="passConfirmation">Password confirmation</label>
-    <input class="form-control" id="passConfirmation" ng-model='user.passConfirmation'
-           placeholder="Password confirmation..." required type="password">
-    <span class="text-danger" ng-repeat='confError in formErrors.passConfirmation'>{{confError}}<br/></span>
+  <div class="form-group" ng-if="user._id">
+    <span ng-show="$parent.showUpdateMessage" class="text-info">Password successfully updated</span>
+    <a class="btn btn-sm" ng-click="$parent.showPasswordForm = !$parent.showPasswordForm">
+      <i class="fa fa-edit">&nbsp;Edit password</i>
+    </a>
+
+    <div ng-show="$parent.showPasswordForm" class="col-md-10 col-md-offset-1 ng-animate">
+      <div class="form-group label-floating is-empty">
+        <label class="control-label">New password</label>
+        <input class="form-control" ng-model='userPassword.password' required type="password">
+        <span class="text-danger" ng-repeat='passError in passErrors.password'>{{passError}}<br/></span>
+        <span class="material-input"></span>
+      </div>
+
+      <div class="form-group label-floating is-empty">
+        <label class="control-label">Password confirmation</label>
+        <input class="form-control" ng-model='userPassword.passConfirmation' required type="password">
+        <span class="text-danger" ng-repeat='confError in passErrors.passConfirmation'>
+          {{confError}}<br/>
+        </span>
+        <span class="material-input"></span>
+      </div>
+      <a class="btn btn-sm center-block" ng-click="updatePassword()">Update password</a>
+    </div>
   </div>
 
-  <button class="btn btn-primary" type="submit">Confirm</button>
+
+  <button class="btn btn-primary btn-lg" type="submit">Confirm</button>
 </form>

@@ -2,7 +2,7 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 
 var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-var phoneRegex = /^\+(380)\d{9}$/;
+var phoneRegex = /^\+(380)\d{9}/;
 
 // var validateEmail = function(email) {
 //     return emailRegex.test(email)
@@ -10,7 +10,6 @@ var phoneRegex = /^\+(380)\d{9}$/;
 
 var Schema = mongoose.Schema;
 
-// TODO: add phone number
 var UserSchema = new Schema({
   // possible fields: [rating, birthday, avatar, etc]
   firstname: {
@@ -130,7 +129,6 @@ UserSchema.pre('save', function (next) {
   next();
 });
 
-// TODO: add FB and  GOOGLE virtuals for displaying status in profile
 UserSchema.virtual('local.password').set(function (password) {
   this.setPassword(password);
 });

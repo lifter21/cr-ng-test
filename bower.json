@@ -21,6 +21,8 @@
     "angular-bootstrap": "^1.2.1",
     "bootstrap-material-design": "^0.5.9",
     "lodash": "^4.6.1",
-    "font-awesome": "^4.5.0"
+    "font-awesome": "^4.5.0",
+    "angular-animate": "^1.5.0",
+    "angular-sanitize": "^1.5.0"
   }
 }

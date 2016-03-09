@@ -8,8 +8,53 @@
 
     <!-- Edit profile -->
     <div class="col-md-8 col-md-offset-2">
-      <legend>Edit profile</legend>
-      <div user-form user="user"></div>
+      <legend>Profile info&nbsp;<a ui-sref="app.me.edit"><i class="fa fa-edit fa-lg"></i></a></legend>
+      <table class="table table-condensed table-hover">
+        <thead>
+        <tr>
+          <th></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Login</td>
+          <td><b>{{user.username}}</b></td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td><b>{{user.email}}</b></td>
+        </tr>
+        <tr>
+          <td>Firstname</td>
+          <td><b>{{user.firstname}}</b></td>
+        </tr>
+        <tr>
+          <td>Lastname</td>
+          <td><b>{{user.lastname}}</b></td>
+        </tr>
+        <tr>
+          <td>Phone</td>
+          <td><b>{{user.phone}}</b></td>
+        </tr>
+        <tr>
+          <td>Registered</td>
+          <td><b>{{user.createdAt | date: 'fullDate'}}</b></td>
+        </tr>
+        <tr>
+          <td>FB connected</td>
+          <td>
+            <i ng-class="{'fa fa-check-square-o fa-lg' : user.socials.isConnectedFB, 'fa fa-times': !user.socials.isConnectedFB}"></i>
+          </td>
+        </tr>
+        <tr>
+          <td>Google connected</td>
+          <td>
+            <i ng-class="{'fa fa-check-square-o fa-lg' : user.socials.isConnectedGoogle, 'fa fa-times': !user.socials.isConnectedGoogle}"></i>
+          </td>
+        </tr>
+        </tbody>
+      </table>
 
     </div>
   </div>

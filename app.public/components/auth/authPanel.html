@@ -2,10 +2,10 @@
 
 <ul class="nav navbar-nav navbar-right">
     <li ui-sref-active="active">
-        <a  ng-if="AuthService.isUser()">{{AuthService.user.fullName}}</a>
+        <a ui-sref="app.me" ng-if="AuthService.isUser()">{{AuthService.user.fullName}}</a>
     </li>
     <li ui-sref-active="active">
-        <a  ng-if="AuthService.isUser()" ui-sref="app.me">
+        <a ng-if="AuthService.isUser()" ui-sref="app.me.edit">
             <i class="fa fa-cog fa-lg"></i>
         </a>
     </li>

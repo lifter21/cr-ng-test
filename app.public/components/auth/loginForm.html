@@ -7,18 +7,20 @@
       <!--TODO: add ng-validate-->
 
       <form ng-submit='login()' novalidate role="form" class="inputs">
+        <div class="text-danger" ng-if='loginError'>{{loginError}}</div>
 
         <div class="form-group label-static is-focused">
-          <div class="text-danger" ng-if='loginError'>{{loginError}}</div>
-          <br/>
-          <label for="username">E-mail or username</label>
-          <input class="form-control" id="username" ng-model='user.username' placeholder="E-mail" required type="text">
+          <label class="control-label">E-mail or username</label>
+          <input class="form-control" id="username" ng-model='user.username' placeholder="E-mail" autofocus required
+                 type="text">
+          <span class="material-input"></span>
         </div>
 
         <div class="form-group label-static">
-          <label for="userpass">Password</label>
+          <label class="control-label">Password</label>
           <input class="form-control" id="userpass" ng-model='user.password' placeholder="Password..." required
                  type="password">
+          <span class="material-input"></span>
         </div>
 
         <div class="form-group">
@@ -29,7 +31,7 @@
           </div>
         </div>
 
-        <div class="form-group label-static">
+        <div class="form-group">
           <span><em>OR</em><br/><br/></span>
           <a href="/auth/facebook" class="btn">
             <i class="fa fa-facebook-f fa-2x"></i>

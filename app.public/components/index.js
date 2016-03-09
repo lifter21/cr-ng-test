@@ -1,5 +1,5 @@
-var app = angular.module('ngTest', ['ui.router', 'ngResource'])
-  .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngAnimate', 'ngSanitize'])
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
     $.material.init();
 
     //$locationProvider.html5Mode({
@@ -46,13 +46,13 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
           data: {
             pageTitle: 'Main'
           }
-        },
+        }
       })
       .state('app.registration', {
         url: '/registration',
         views: {
           '@': {
-            controller: 'UserRegistrationController',
+            //controller: 'UserRegistrationController',
             templateUrl: '/components/userRegistration/registrationForm.html'
           }
         },
@@ -85,6 +85,18 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource'])
         views: {
           '@': {
             templateUrl: '/components/profile/profile.html',
+            controller: 'ProfileController'
+          }
+        },
+        data: {
+          pageTitle: 'Profile'
+        }
+      })
+      .state('app.me.edit', {
+        url: '/edit',
+        views: {
+          '@': {
+            templateUrl: '/components/profile/profileEdit.html',
             controller: 'ProfileController'
           }
         },
