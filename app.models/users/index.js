@@ -1,5 +1,6 @@
 var crypto = require('crypto');
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
 
 var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 var phoneRegex = /^\+(380)\d{9}/;
@@ -7,8 +8,6 @@ var phoneRegex = /^\+(380)\d{9}/;
 // var validateEmail = function(email) {
 //     return emailRegex.test(email)
 // };
-
-var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
   // possible fields: [rating, birthday, avatar, etc]

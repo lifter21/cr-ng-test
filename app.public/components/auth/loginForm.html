@@ -9,7 +9,7 @@
       <form ng-submit='login()' novalidate role="form" class="inputs">
         <div class="text-danger" ng-if='loginError'>{{loginError}}</div>
 
-        <div class="form-group label-static is-focused">
+        <div class="form-group label-static is-focused" ng-class="{'has-error': loginError}">
           <label class="control-label">E-mail or username</label>
           <input class="form-control" id="username" ng-model='user.username' placeholder="E-mail" autofocus required
                  type="text">
@@ -27,6 +27,8 @@
           <div class="checkbox">
             <label>
               <input type="checkbox" ng-model="user.remember"><span class="checkbox-material"><span class="check"></span></span> Remember me
+              <span class="checkbox-material"></span>
+              <span class="check"></span>
             </label>
           </div>
         </div>

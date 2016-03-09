@@ -104,6 +104,54 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', '
           pageTitle: 'Edit profile'
         }
       })
+      .state('app.products', {
+        url: '/products',
+        views: {
+          '@': {
+            templateUrl: '/components/products/productsList.html',
+            controller: 'ProductsListController'
+          }
+        },
+        data: {
+          pageTitle: 'Products'
+        }
+      })
+      .state('app.products.new', {
+        url: '/new',
+        views: {
+          '@': {
+            templateUrl: '/components/products/productsForm.html',
+            controller: 'NewProductController'
+          }
+        },
+        data: {
+          pageTitle: 'Create product'
+        }
+      })
+      .state('app.products.product', {
+        url: '/:productId',
+        views: {
+          '@': {
+            templateUrl: '/components/products/product.html',
+            controller: 'ProductController'
+          }
+        },
+        data: {
+          pageTitle: 'Product details'
+        }
+      })
+      .state('app.products.product.edit', {
+        url: '/edit',
+        views: {
+          '@': {
+            templateUrl: '/components/products/productsForm.html',
+            controller: 'EditProductController'
+          }
+        },
+        data: {
+          pageTitle: 'Edit product'
+        }
+      })
       .state('app.404', {
         url: '/pageNotFound',
         views: {
@@ -117,7 +165,7 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', '
       })
   })
   .factory('HttpInterceptor', function ($q, $injector) {
-    var pub_states = ['/home', '/login', '/registration', 'pageNotFound'];
+    var pub_states = ['/home', '/login', '/registration', '/pageNotFound'];
     return {
       'responseError': function (rejection) {
         // do something on error

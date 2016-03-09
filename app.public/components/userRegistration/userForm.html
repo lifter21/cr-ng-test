@@ -1,8 +1,10 @@
-<form ng-submit='save()' novalidate class="">
+<div class="bs-component">
+
+  <form ng-submit='save()' novalidate class="">
 
   <!--TODO: add ng-validate-->
 
-  <div class="form-group label-floating" ng-class="{'is-empty': !user.username}">
+    <div class="form-group label-floating" ng-class="{'is-empty': !user.username, 'has-error' : formErrors.username}">
     <label class="control-label">Your login</label>
 
     <div ng-if="!user._id">
@@ -18,7 +20,7 @@
     <span class="material-input"></span>
   </div>
 
-  <div class="form-group label-floating" ng-class="{'is-empty': !user.username}">
+    <div class="form-group label-floating" ng-class="{'is-empty': !user.firstname}">
     <label class="control-label">First name</label>
     <input class="form-control" ng-model='user.firstname' type="text">
     <span class="material-input"></span>
@@ -30,7 +32,7 @@
     <span class="material-input"></span>
   </div>
 
-  <div class="form-group label-floating" ng-class="{'is-empty': !user.email}">
+    <div class="form-group label-floating" ng-class="{'is-empty': !user.email, 'has-error' : formErrors.email}">
     <label class="control-label">E-mail...</label>
     <input type="email" class="form-control" ng-model='user.email' required>
 
@@ -41,7 +43,7 @@
     <span class="material-input"></span>
   </div>
 
-  <div class="form-group label-floating" ng-class="{'is-empty': !user.phone}">
+    <div class="form-group label-floating" ng-class="{'is-empty': !user.phone, 'has-error' : formErrors.email}">
     <label class="control-label">Phone</label>
     <input class="form-control" ng-model='user.phone' required type="string">
 
@@ -54,7 +56,7 @@
   </div>
 
   <div ng-if="!user._id">
-    <div class="form-group label-floating is-empty">
+    <div class="form-group label-floating is-empty" ng-class="{'has-error' : formErrors.password}">
       <label class="control-label">Password</label>
       <input class="form-control" ng-model='user.password' required type="password">
       <span class="text-danger" ng-if="formErrors.password" ng-repeat='passError in formErrors.password'>
@@ -63,7 +65,7 @@
       <span class="material-input"></span>
     </div>
 
-    <div class="form-group label-floating is-empty">
+    <div class="form-group label-floating is-empty" ng-class="{'has-error' : formErrors.passConfirmation}">
       <label class="control-label">Password confirmation</label>
       <input class="form-control" ng-model='user.passConfirmation' required type="password">
       <span class="text-danger" ng-if="formErrors.passConfirmation"
@@ -74,13 +76,14 @@
     </div>
   </div>
 
-  <div class="form-group" ng-if="user._id">
+    <div class="form-group bs-component" ng-if="user._id">
     <span ng-show="$parent.showUpdateMessage" class="text-info">Password successfully updated</span>
     <a class="btn btn-sm" ng-click="$parent.showPasswordForm = !$parent.showPasswordForm">
       <i class="fa fa-edit">&nbsp;Edit password</i>
     </a>
 
-    <div ng-show="$parent.showPasswordForm" class="col-md-10 col-md-offset-1 ng-animate">
+      <div ng-show="$parent.showPasswordForm" class="col-md-10 col-md-offset-1 ng-animate"
+           ng-class="{'has-error' : passErrors.password}">
       <div class="form-group label-floating is-empty">
         <label class="control-label">New password</label>
         <input class="form-control" ng-model='userPassword.password' required type="password">
@@ -88,7 +91,7 @@
         <span class="material-input"></span>
       </div>
 
-      <div class="form-group label-floating is-empty">
+        <div class="form-group label-floating is-empty" ng-class="{'has-error' : passErrors.passConfirmation}">
         <label class="control-label">Password confirmation</label>
         <input class="form-control" ng-model='userPassword.passConfirmation' required type="password">
         <span class="text-danger" ng-repeat='confError in passErrors.passConfirmation'>
@@ -96,10 +99,11 @@
         </span>
         <span class="material-input"></span>
       </div>
-      <a class="btn btn-sm center-block" ng-click="updatePassword()">Update password</a>
+        <a class="btn btn-sm center-block btn-raised" ng-click="updatePassword()">Update password</a>
     </div>
   </div>
 
 
   <button class="btn btn-primary btn-lg" type="submit">Confirm</button>
 </form>
+</div>
