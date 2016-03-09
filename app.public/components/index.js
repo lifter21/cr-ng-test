@@ -101,7 +101,7 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', '
           }
         },
         data: {
-          pageTitle: 'Profile'
+          pageTitle: 'Edit profile'
         }
       })
       .state('app.404', {

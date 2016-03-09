@@ -58,7 +58,7 @@ app.use(function (err, req, res, next) {
   next(err)
 });
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   console.log('-> ', req.url);
   next();
 });
@@ -66,10 +66,10 @@ app.use(function(req, res, next) {
 // hanlde unknown routes and XHR
 app.use(function (req, res) {
   if (req.xhr) {
-    return res.sendStatus(404);
+    return res.status(404).sendFile(__dirname + '/app.public/404.html');
   }
-
-  return res.sendStatus(404);
+  //return res.sendStatus(404);
+  return res.status(404).sendFile(__dirname + '/app.public/404.html');
 });
 
 app.listen(port, function () {
