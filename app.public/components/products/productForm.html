@@ -1,0 +1,30 @@
+<div class="well" style="background-color: #fff;">
+	<form role="form" name="productForm" novalidate ng-submit="save()">
+		<!--<legend>Form Title</legend>-->
+
+		<div class="form-group is-focused">
+			<label class="control-label">Title</label>
+			<input type="text" class="form-control" name="" required maxlength="255" ng-model="product.title" autofocus>
+			<span class="text-danger" ng-repeat="titleError in formErrors.title">{{titleError}}<br/></span>
+			<span class="material-input"></span>
+		</div>
+
+		<div class="form-group ">
+			<label class="control-label">Price</label>
+			<input type="text" class="form-control" name="" required ng-model="product.price">
+			<span class="text-danger" ng-repeat="priceError in formErrors.price">{{priceError}}<br/></span>
+			<span class="material-input"></span>
+		</div>
+
+		<div class="form-group ">
+			<label class="control-label">Description</label>
+  		<textarea cols="5" rows="3" maxlength="1000" class="form-control" name=""
+								required ng-model="product.description"/>
+			<span class="text-danger" ng-repeat="descriptionError in formErrors.description">{{descriptionError}}<br/></span>
+			<span class="material-input"></span>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+		<a class="btn btn-default" ng-click="cancel()">Cancel</a>
+	</form>
+</div>

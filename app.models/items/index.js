@@ -11,7 +11,7 @@ var ItemSchema = new Schema({
   price: {
     type: Number,
     required: true,
-    match: [/^\d{1,4}.\d{2}/, 'Incorrect price value']
+    match: [/^\d{1,4}\.\d{2}/, 'Incorrect price value']
   },
   description: {
     type: String,

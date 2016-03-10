@@ -5,7 +5,7 @@ app
     $scope.login = function () {
       AuthService.login($scope.user)
         .then(function (user) {
-          $state.go('app.index');
+          $state.go('app.products');
         }, function (err) {
           $scope.loginError = err.data.loginError;
         });

@@ -10,13 +10,13 @@ module.exports = function (app) {
 
   var ItemForm = form(
     field('title').trim().required().maxLength(255),
-    field('price').trim().required().is("/^\d{1,4}.\d{2}/"),
+    field('price').trim().required().is(/^\d{1,4}\.\d{2}/),
     field('description').trim().required().maxLength(1000)
   );
 
   app.use('/api/items', AuthService.isAuthenticated);
 
-  app.param('itemId', function (itemId, req, res, next) {
+  app.param('itemId', function (req, res, next, itemId) {
     Items.findById(itemId)
       .populate('creator', 'username')
       .exec(function (err, item) {
@@ -35,32 +35,28 @@ module.exports = function (app) {
 
   // TODO: continue here
   app.get('/api/items', function (req, res, next) {
-    var query = {
-      page: req.query.page || 0,
-      limit: req.query.limit || 20,
-    };
+    var page = req.query.page || 0,
+      limit = req.query.limit || 20;
+
+    var query = {};
 
     Items.find(query)
       .populate('creator', 'username')
-      .group('title', 1)
-      .limit(query.limit)
+      .sort('createdAt 1')
       .skip(query.page * query.limit)
+      .limit(query.limit)
       .exec(function (err, items) {
         if (err) {
           return next(err);
         }
 
-        res.json(items)
-      })
-    ;
-
-    res.sendStatus(200);
-    //Items.find()
+        return res.json(items)
+      });
   });
 
   app.post('/api/items', ItemForm, FormService.isValidForm, function (req, res, next) {
     var newItem = new Items();
-    _.asign(newItem, req.form);
+    _.assign(newItem, req.form);
     newItem.creator = req.user;
 
     newItem.save(function (err, item) {
@@ -77,7 +73,7 @@ module.exports = function (app) {
   });
 
   app.put('/api/items/:itemId', ItemForm, FormService.isValidForm, function (req, res, next) {
-    _.asign(req.Item, req.form);
+    _.assign(req.Item, req.form);
 
     req.Item.save(function (err, item) {
       if (err) {

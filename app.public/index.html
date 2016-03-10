@@ -74,6 +74,11 @@
 <!--profile controller-->
 <script src="/components/profile/profileController.js"></script>
 
+<!-- products controllers -->
+<script src="/components/products/productsListController.js"></script>
+<script src="/components/products/productFormController.js"></script>
+<script src="/components/products/productController.js"></script>
+
 <!--Common directives-->
 <script src="/components/common/directives/titleDirective.js"></script>
 
@@ -93,7 +98,7 @@
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
         <li  ui-sref-active="active"><a ui-sref="app.home">Home</a></li>
-        <li ><a pui-sref="">Products</a></li>
+        <li ui-sref-active="active"><a ui-sref="app.products">Products</a></li>
 
       </ul>
       <div ui-view='auth-panel'>
@@ -106,9 +111,10 @@
   <!-- /.container-fluid -->
 </nav>
 
-<div class="col-md-10 col-md-offset-1" ui-view>
+<ui-view>
 
-</div>
+</ui-view>
+
 </body>
 
 </html>

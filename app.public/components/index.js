@@ -36,18 +36,18 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', '
           pageTitle: 'Home'
         }
       })
-      .state('app.index', {
-        url: '/index',
-        views: {
-          '@': {
-            templateUrl: '/components/mainPage/mainPage.html',
-            controller: 'MainPageController'
-          },
-          data: {
-            pageTitle: 'Main'
-          }
-        }
-      })
+      //.state('app.index', {
+      //  url: '/index',
+      //  views: {
+      //    '@': {
+      //      templateUrl: '/components/mainPage/mainPage.html',
+      //      controller: 'MainPageController'
+      //    },
+      //    data: {
+      //      pageTitle: 'Main'
+      //    }
+      //  }
+      //})
       .state('app.registration', {
         url: '/registration',
         views: {
@@ -120,8 +120,8 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', '
         url: '/new',
         views: {
           '@': {
-            templateUrl: '/components/products/productsForm.html',
-            controller: 'NewProductController'
+            templateUrl: '/components/products/productForm.html',
+            controller: 'ProductFormController'
           }
         },
         data: {
@@ -144,8 +144,8 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', '
         url: '/edit',
         views: {
           '@': {
-            templateUrl: '/components/products/productsForm.html',
-            controller: 'EditProductController'
+            templateUrl: '/components/products/productForm.html',
+            controller: 'ProductFormController'
           }
         },
         data: {
