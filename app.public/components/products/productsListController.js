@@ -4,8 +4,18 @@ app
   })
   .controller('ProductsListController', function ($scope, ProductsResource, $uibModal) {
 
+    $scope.query = {
+      page: 0,
+      limit: 10
+    };
+
+    $scope.setLimit = function (count) {
+      $scope.query.limit = count;
+      $scope.init();
+    };
+
     $scope.init = function () {
-      ProductsResource.query(function (products) {
+      ProductsResource.query($scope.query, function (products) {
         $scope.products = products;
       }, function (err) {
         console.log(err);

@@ -35,16 +35,15 @@ module.exports = function (app) {
 
   // TODO: continue here
   app.get('/api/items', function (req, res, next) {
-    var page = req.query.page || 0,
-      limit = req.query.limit || 20;
-
+    var limit = +req.query.limit || 10;
+    var page = +req.query.page || 0;
     var query = {};
 
     Items.find(query)
       .populate('creator', 'username')
       .sort('createdAt 1')
-      .skip(query.page * query.limit)
-      .limit(query.limit)
+      .skip(page * limit)
+      .limit(limit)
       .exec(function (err, items) {
         if (err) {
           return next(err);
