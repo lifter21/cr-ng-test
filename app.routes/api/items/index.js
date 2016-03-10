@@ -7,6 +7,9 @@ module.exports = function (app) {
   var Items = app.container.get('Items');
   var FormService = app.container.get('FormService');
   var AuthService = app.container.get('AuthService');
+  var ItemsService = require('./itemsService')(app);
+
+  app.set('ItemsService', ItemsService);
 
   var ItemForm = form(
     field('title').trim().required().maxLength(255),
@@ -17,47 +20,44 @@ module.exports = function (app) {
   app.use('/api/items', AuthService.isAuthenticated);
 
   app.param('itemId', function (req, res, next, itemId) {
-    Items.findById(itemId)
-      .populate('creator', 'username')
-      .exec(function (err, item) {
-        if (err) {
-          return next(err);
-        }
+    ItemsService.findById(itemId, function (err, item) {
+      if (err) {
+        return next(err);
+      }
 
-        if (!item) {
-          return res.status(404).send({error: 'Item is not found'});
-        }
+      if (!item) {
+        return res.status(404).send({error: 'Item is not found'});
+      }
 
-        req.Item = item;
-        next();
-      })
+      req.Item = item;
+      next();
+    })
   });
 
-  // TODO: continue here
   app.get('/api/items', function (req, res, next) {
     var limit = +req.query.limit || 10;
     var page = +req.query.page || 0;
     var query = {};
 
-    // TODO: move to itemService
-    Items.find(query)
-      .populate('creator', 'username')
-      .sort('createdAt 1')
-      .skip(page * limit)
-      .limit(limit)
-      .exec(function (err, items) {
-        if (err) {
-          return next(err);
-        }
-        Items.count(query, function (err, count) {
-          if (err) {
-            return next(err);
-          }
+    ItemsService.getItemsByQuery(query, limit, page, null, function (err, items) {
+      if (err) {
+        return next(err);
+      }
 
-          return res.json({products: items, count: count})
-        })
+      return res.json(items);
+    });
+  });
 
-      });
+  app.get('/api/items/count', function (req, res, next) {
+    var query = {};
+
+    ItemsService.getItemsCountByQuery(query, function (err, count) {
+      if (err) {
+        return next(err);
+      }
+
+      return res.json({count: count});
+    })
   });
 
   app.post('/api/items', ItemForm, FormService.isValidForm, function (req, res, next) {

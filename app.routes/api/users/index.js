@@ -74,10 +74,11 @@ module.exports = function (app) {
       user.local.passwordSalt = undefined;
       user.local.passwordHash = undefined;
 
-      // TODO: check _user content
       return res.json(_user);
     })
   });
+
+  // TODO add routes for email and username check
 
   // let user get and edit data only if user Authenticated
   app.use('/api/users/me', AuthService.isAuthenticated);

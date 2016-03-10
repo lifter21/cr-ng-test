@@ -1,13 +1,15 @@
 <container>
+
   <div class="container">
     <div class="row">
-      <div class="well">
-        <span ng-if="!products.length">
-          No items addet yet!
-        </span>
-        <a ng-click="showProductForm()" class="btn btn-success btn-fab btn-fab-mini text-left" title="Add new item">
+      <div class="" style="position: fixed; z-index: 1000; bottom:70px; left:11px;">
+        <a ng-click="showProductForm()" class="btn btn-success btn-fab btn-fab-mini text-left well well-sm"
+           title="Add new item">
           <i class="material-icons fa fa-plus"></i>
         </a>
+        <span ng-if="!products.length" class="text-center text-info">
+          No items addet yet!
+        </span>
       </div>
     </div>
 
@@ -16,14 +18,15 @@
         <div class="pull-right text-center" style="width: 200px;">
           <span >Show on page:</span>
           <div togglable-buttons-panel class="btn-group btn-group-justified btn-group-raised">
-            <a href="javascript:void(0)" class="btn active" ng-click="setLimit(10)">10</a>
-            <a href="javascript:void(0)" class="btn " ng-click="setLimit(20)">20</a>
-            <a href="javascript:void(0)" class="btn " ng-click="setLimit(50)">50</a>
+            <a href="javascript:void(0)" class="btn" ng-repeat="limit in productsShowLimits" ng-click="setLimit(limit)"
+               ng-class="{active: query.limit === limit}">{{limit}}</a>
           </div>
         </div>
       </div>
-      <div class="col-md-3 center-block" ng-repeat="product in products">
-        <div class="thumbnail">
+      <div class=""
+           ng-class="{'col-xs-12 col-sm-6 col-md-3 col-lg-3': query.limit !==1,'col-md-6 col-md-offset-3 ': query.limit ===1 }"
+           ng-repeat="product in products">
+        <div class="thumbnail well well-sm">
           <div class="caption">
             <h3>{{product.title}}</h3>
 
@@ -42,7 +45,7 @@
               <a ng-click="remove(product)" class="btn btn-danger btn-fab btn-fab-mini">
                 <i class="material-icons fa fa-trash"></i>
               </a>
-              <a class="btn btn-warning btn-fab btn-fab-mini">
+              <a ng-click="toggleRemove(product, $event)" class="btn btn-warning btn-fab btn-fab-mini">
                 <i class="material-icons fa fa-check"></i>
               </a>
             </p>
@@ -52,16 +55,18 @@
 
     </div>
     <div class="row text-center">
-      <ul class="pagination pagination-lg">
-        <li ng-class="{'disabled': query.page === 0}"><a href="javascript:void(0)" ng-click="setPage(0)"
-                                                         title="first page">«</a></li>
-        <li ng-repeat="p in pages" ng-class="{'disabled': query.page === p}"><a href="javascript:void(0)"
-                                                                                ng-click="setPage(p)">{{p+1}}</a></li>
-        <li ng-class="{'disabled': pages.length-1 === 0 || query.page === pages.length-1}"><a href="javascript:void(0)"
-                                                                                              ng-click="setPage(pages.length-1)"
-                                                                                              title="last page">»</a>
-        </li>
-      </ul>
+      <uib-pagination total-items="count"
+                      num-pages="pagesCount"
+                      ng-model="page"
+                      max-size="10"
+                      items-per-page="query.limit"
+                      rotate="true"
+                      ng-change="changePage()"
+                      class="pagination-lg"
+                      boundary-links="true"
+                      force-ellipses="true"
+                      boundary-link-numbers="false">
+      </uib-pagination>
     </div>
   </div>
 </container>

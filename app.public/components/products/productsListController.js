@@ -1,37 +1,46 @@
 app
   .factory('ProductsResource', function ($resource) {
-    return $resource('/api/items/:itemId', {'itemId': '@_id'}, {update: {method: 'PUT'}});
+    return $resource('/api/items/:itemId', {'itemId': '@_id'}, {
+      update: {method: 'PUT'},
+      getCount: {method: 'GET', url: '/api/items/count'}
+    });
   })
   .controller('ProductsListController', function ($scope, ProductsResource, $uibModal) {
+    $scope.productsShowLimits = [1, 10, 20, 50];
 
     $scope.query = {
       page: 0,
       limit: 10
     };
 
+    $scope.page = 1;
+
+    $scope.changePage = function () {
+      $scope.query.page = $scope.page - 1;
+    };
+
+    // Products on page limit
     $scope.setLimit = function (limit) {
       $scope.query.limit = limit;
       $scope.query.page = 0;
-      $scope.init();
+      $scope.page = 1;
     };
 
-    $scope.setPage = function (page) {
-      $scope.query.page = page;
-      $scope.init();
-    };
+    $scope.$watch('query', function () {
+      $scope.init()
+    }, true);
 
+    // load products
+    // add new resource to get count
     $scope.init = function () {
-      ProductsResource.get($scope.query, function (data) {
-        $scope.products = data.products;
-        $scope.count = data.count;
-        $scope.pagesCount = _.ceil($scope.count / $scope.query.limit, 0);
-        console.log($scope.pagesCount);
-        var pagesArray = [];
-        for (var i = 0; i < $scope.pagesCount; i++) {
-          pagesArray.push(i);
-        }
-
-        $scope.pages = pagesArray
+      ProductsResource.query($scope.query, function (data) {
+        $scope.products = data;
+        ProductsResource.getCount({}, function (data) {
+          $scope.count = data.count;
+          $scope.pagesCount = _.ceil($scope.count / $scope.query.limit, 0);
+        }, function (err) {
+          console.log(err);
+        });
       }, function (err) {
         console.log(err);
       });
@@ -42,7 +51,6 @@ app
     $scope.remove = function (product) {
       product.$delete()
         .then(function (resp) {
-          console.log(resp);
           $scope.init();
         })
         .catch(function (err) {
@@ -50,6 +58,7 @@ app
         })
     };
 
+    // show product details in modal
     $scope.showProductDetails = function (product) {
       var modalInstance = $uibModal.open({
         templateUrl: '/components/products/productInfoModal.html',
@@ -77,6 +86,7 @@ app
       });
     };
 
+    // add/edit product in modal
     $scope.showProductForm = function (product) {
       var product = product || {};
 
@@ -98,7 +108,8 @@ app
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
-    }
+    };
+
 
   })
 
@@ -118,7 +129,7 @@ app
 
     $scope.cancel = modalCancel($uibModalInstance);
 
-  })
+  });
 
 function modalOk($uibModalInstance, data) {
   var data = data || undefined
