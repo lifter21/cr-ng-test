@@ -1,21 +1,23 @@
+'use strict';
+
 module.exports = function (app) {
   var Items = app.container.get('Items'),
     Users = app.container.get('Users');
 
-  function itemsService() {
+  function ItemsService() {
   };
 
-  itemsService.prototype.getItemsCountByQuery = function (query, cb) {
+  ItemsService.prototype.getItemsCountByQuery = function (query, cb) {
     Items.count(query).exec(cb);
   };
 
-  itemsService.prototype.getItemsById = function (id, cb) {
+  ItemsService.prototype.getItemById = function (id, cb) {
     Items.findById(id)
       .populate('creator', 'username')
       .exec(cb);
   };
 
-  itemsService.prototype.getItemsByQuery = function (query, limit, page, sortString, cb) {
+  ItemsService.prototype.getItemsByQuery = function (query, limit, page, sortString, cb) {
     var limit = limit || 0;
     var page = page || 0;
     var sortString = sortString || 'createdAt 1';
@@ -27,6 +29,13 @@ module.exports = function (app) {
       .exec(cb);
   };
 
-  return new itemsService();
+  ItemsService.prototype.removeMultipleItemsByQuery = function (query, cb) {
+    Items.remove(query).exec(cb)
+  };
+
+  var Service = new ItemsService();
+  app.set('ItemsService', Service);
+
+  return Service;
 };
 

@@ -2,36 +2,14 @@ app
   .factory('ProductsResource', function ($resource) {
     return $resource('/api/items/:itemId', {'itemId': '@_id'}, {
       update: {method: 'PUT'},
-      getCount: {method: 'GET', url: '/api/items/count'}
+      getCount: {method: 'GET', url: '/api/items/count'},
+      deleteMulti: {method: 'DELETE', url: '/api/items'}
     });
   })
   .controller('ProductsListController', function ($scope, ProductsResource, $uibModal) {
-    $scope.productsShowLimits = [1, 10, 20, 50];
-
-    $scope.query = {
-      page: 0,
-      limit: 10
-    };
-
-    $scope.page = 1;
-
-    $scope.changePage = function () {
-      $scope.query.page = $scope.page - 1;
-    };
-
-    // Products on page limit
-    $scope.setLimit = function (limit) {
-      $scope.query.limit = limit;
-      $scope.query.page = 0;
-      $scope.page = 1;
-    };
-
-    $scope.$watch('query', function () {
-      $scope.init()
-    }, true);
 
     // load products
-    // add new resource to get count
+
     $scope.init = function () {
       ProductsResource.query($scope.query, function (data) {
         $scope.products = data;
@@ -48,6 +26,74 @@ app
 
     $scope.init();
 
+    // Limits products on page
+
+    $scope.productsShowLimits = [1, 10, 20, 50];
+
+    $scope.query = {
+      page: 0,
+      limit: 10
+    };
+
+    $scope.page = 1;
+
+    $scope.changePage = function () {
+      $scope.query.page = $scope.page - 1;
+    };
+
+    $scope.setLimit = function (limit) {
+      $scope.query.limit = limit;
+      $scope.query.page = 0;
+      $scope.page = 1;
+    };
+
+    $scope.$watch('query', function () {
+      $scope.init()
+    }, true);
+
+    // ------------------------
+
+    // remove multiple products
+
+    $scope.productsToRemove = [];
+
+    $scope.toggleRemove = function (productId) {
+      if ($scope.isMarkedForRemove(productId)) {
+        _.remove($scope.productsToRemove, function (product) {
+          return product === productId
+        })
+      } else {
+        $scope.productsToRemove.push(productId)
+      }
+    };
+
+    $scope.isMarkedForRemove = function (id) {
+      return _.includes($scope.productsToRemove, id)
+    };
+
+    $scope.$watch('productsToRemove', function (val) {
+      $scope.removeMultipleQuery = {
+        items: $scope.productsToRemove
+      };
+      $scope.countToDelete = $scope.productsToRemove.length
+    }, true);
+
+    $scope.removeSelected = function () {
+      if (confirm("Now you are going to delete " + $scope.countToDelete + ' items')) {
+        ProductsResource.deleteMulti($scope.removeMultipleQuery, function (resp) {
+          $scope.productsToRemove = [];
+          $scope.init();
+          console.log(resp);
+        }, function (err) {
+          console.log(err);
+        })
+      }
+    };
+
+    // ----------------------
+
+    // remove single product
+
     $scope.remove = function (product) {
       product.$delete()
         .then(function (resp) {
@@ -58,7 +104,10 @@ app
         })
     };
 
+    // ------------------------
+
     // show product details in modal
+
     $scope.showProductDetails = function (product) {
       var modalInstance = $uibModal.open({
         templateUrl: '/components/products/productInfoModal.html',
@@ -71,22 +120,24 @@ app
         },
         controller: function ($scope, $uibModalInstance, product) {
           $scope.product = product;
-
           $scope.ok = modalOk($uibModalInstance);
-
           $scope.cancel = modalCancel($uibModalInstance);
         }
       });
 
-      modalInstance.result.then(function () {
-        //$scope.init();
-        //$scope.selected = selectedItem;
-      }, function () {
-        console.log('Modal dismissed at: ' + new Date());
-      });
+      //  // nothing to do...
+      //modalInstance.result.then(function () {
+      //  //$scope.init();
+      //  //$scope.selected = selectedItem;
+      //}, function () {
+      //  console.log('Modal dismissed at: ' + new Date());
+      //});
     };
 
-    // add/edit product in modal
+    // ----------------------
+
+    // create/edit product in modal
+
     $scope.showProductForm = function (product) {
       var product = product || {};
 
@@ -104,13 +155,12 @@ app
 
       modalInstance.result.then(function () {
         $scope.init();
-        //$scope.selected = selectedItem;
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
     };
 
-
+    // ------------------------
   })
 
   .controller('ProductFormModalController', function ($scope, $uibModalInstance, product) {
@@ -126,13 +176,11 @@ app
     };
 
     $scope.ok = modalOk($uibModalInstance);
-
     $scope.cancel = modalCancel($uibModalInstance);
-
   });
 
 function modalOk($uibModalInstance, data) {
-  var data = data || undefined
+  var data = data || undefined;
   return function () {
     $uibModalInstance.close(data);
   }

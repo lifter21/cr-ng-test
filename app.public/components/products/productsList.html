@@ -7,16 +7,26 @@
            title="Add new item">
           <i class="material-icons fa fa-plus"></i>
         </a>
-        <span ng-if="!products.length" class="text-center text-info">
-          No items addet yet!
-        </span>
+      </div>
+      <div class="" style="position: fixed; z-index: 1000; bottom:130px; left:11px;">
+        <a ng-if="productsToRemove.length" ng-click="removeSelected()"
+           class="btn btn-danger btn-fab btn-fab-mini text-left well well-sm"
+           title="Add new item">
+          <h6 style="position: fixed; top:5px; right: 2px;">{{countToDelete}}</h6>
+          <i class="material-icons fa fa-trash-o"></i>
+        </a>
       </div>
     </div>
 
     <div class="row">
+      <span ng-if="!products.length" class="text-center text-info">
+          No items addet yet!
+       </span>
+
       <div class="row">
         <div class="pull-right text-center" style="width: 200px;">
-          <span >Show on page:</span>
+          <span>Show on page:</span>
+
           <div togglable-buttons-panel class="btn-group btn-group-justified btn-group-raised">
             <a href="javascript:void(0)" class="btn" ng-repeat="limit in productsShowLimits" ng-click="setLimit(limit)"
                ng-class="{active: query.limit === limit}">{{limit}}</a>
@@ -39,13 +49,16 @@
                  title="Product details">
                 <i class="material-icons fa fa-info"></i>
               </a>
-              <a ng-click="showProductForm(product)" class="btn btn-success btn-fab btn-fab-mini" title="Edit product">
+              <a ng-click="showProductForm(product)" class="btn btn-success btn-fab btn-fab-mini"
+                 title="Edit product">
                 <i class="material-icons fa fa-edit"></i>
               </a>
-              <a ng-click="remove(product)" class="btn btn-danger btn-fab btn-fab-mini">
+              <a ng-click="remove(product)" class="btn btn-danger btn-fab btn-fab-mini"
+                 title="Remove item">
                 <i class="material-icons fa fa-trash"></i>
               </a>
-              <a ng-click="toggleRemove(product, $event)" class="btn btn-warning btn-fab btn-fab-mini">
+              <a ng-click="toggleRemove(product._id, $event)" class="btn  btn-default btn-fab btn-fab-mini"
+                 title="Mark to delete" ng-class="{'btn-warning': isMarkedForRemove(product._id)}">
                 <i class="material-icons fa fa-check"></i>
               </a>
             </p>

@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
@@ -11,7 +13,7 @@ var ItemSchema = new Schema({
   price: {
     type: Number,
     required: true,
-    match: [/^\d{1,4}\.\d{2}/, 'Incorrect price value']
+    match: [/^(\d{1,6})(\.){0,1}(\d{0,2})/, 'Incorrect price value']
   },
   description: {
     type: String,

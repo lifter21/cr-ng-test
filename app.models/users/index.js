@@ -1,3 +1,5 @@
+'use strict';
+
 var crypto = require('crypto');
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
@@ -144,5 +146,4 @@ UserSchema.virtual('fullName').get(function () {
   return [this.firstname, this.lastname].join(' ');
 });
 
-// module.exports = mongoose.model('Users', UserSchema);
 module.exports = mongoose.model('Users', UserSchema);
