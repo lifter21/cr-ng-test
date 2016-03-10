@@ -9,14 +9,29 @@ app
       limit: 10
     };
 
-    $scope.setLimit = function (count) {
-      $scope.query.limit = count;
+    $scope.setLimit = function (limit) {
+      $scope.query.limit = limit;
+      $scope.query.page = 0;
+      $scope.init();
+    };
+
+    $scope.setPage = function (page) {
+      $scope.query.page = page;
       $scope.init();
     };
 
     $scope.init = function () {
-      ProductsResource.query($scope.query, function (products) {
-        $scope.products = products;
+      ProductsResource.get($scope.query, function (data) {
+        $scope.products = data.products;
+        $scope.count = data.count;
+        $scope.pagesCount = _.ceil($scope.count / $scope.query.limit, 0);
+        console.log($scope.pagesCount);
+        var pagesArray = [];
+        for (var i = 0; i < $scope.pagesCount; i++) {
+          pagesArray.push(i);
+        }
+
+        $scope.pages = pagesArray
       }, function (err) {
         console.log(err);
       });

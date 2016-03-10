@@ -39,6 +39,7 @@ module.exports = function (app) {
     var page = +req.query.page || 0;
     var query = {};
 
+    // TODO: move to itemService
     Items.find(query)
       .populate('creator', 'username')
       .sort('createdAt 1')
@@ -48,8 +49,14 @@ module.exports = function (app) {
         if (err) {
           return next(err);
         }
+        Items.count(query, function (err, count) {
+          if (err) {
+            return next(err);
+          }
 
-        return res.json(items)
+          return res.json({products: items, count: count})
+        })
+
       });
   });
 

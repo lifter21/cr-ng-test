@@ -52,12 +52,15 @@
 
     </div>
     <div class="row text-center">
-      <ul togglable-buttons-panel  class="pagination pagination-lg">
-        <li class="disabled"><a href="javascript:void(0)">«</a></li>
-        <li class="active"><a href="javascript:void(0)">1</a></li>
-        <li><a href="javascript:void(0)">2</a></li>
-        <li><a href="javascript:void(0)">3</a></li>
-        <li><a href="javascript:void(0)">»</a></li>
+      <ul class="pagination pagination-lg">
+        <li ng-class="{'disabled': query.page === 0}"><a href="javascript:void(0)" ng-click="setPage(0)"
+                                                         title="first page">«</a></li>
+        <li ng-repeat="p in pages" ng-class="{'disabled': query.page === p}"><a href="javascript:void(0)"
+                                                                                ng-click="setPage(p)">{{p+1}}</a></li>
+        <li ng-class="{'disabled': pages.length-1 === 0 || query.page === pages.length-1}"><a href="javascript:void(0)"
+                                                                                              ng-click="setPage(pages.length-1)"
+                                                                                              title="last page">»</a>
+        </li>
       </ul>
     </div>
   </div>
