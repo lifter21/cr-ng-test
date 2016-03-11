@@ -2,13 +2,13 @@
 
   <div class="container">
     <div class="row">
-      <div class="" style="position: fixed; z-index: 1000; bottom:70px; left:11px;">
+      <div class="" style="position: fixed; z-index: 1000; bottom:60px; left:11px;">
         <a ng-click="showProductForm()" class="btn btn-success btn-fab btn-fab-mini text-left well well-sm"
            title="Add new item">
           <i class="material-icons fa fa-plus"></i>
         </a>
       </div>
-      <div class="" style="position: fixed; z-index: 1000; bottom:130px; left:11px;">
+      <div class="" style="position: fixed; z-index: 1000; bottom:120px; left:11px;">
         <a ng-if="productsToRemove.length" ng-click="removeSelected()"
            class="btn btn-danger btn-fab btn-fab-mini text-left well well-sm"
            title="Remove selected items">
@@ -18,14 +18,14 @@
           <i class="material-icons fa fa-trash-o"></i>
         </a>
       </div>
-      <div class="" style="position: fixed; z-index: 1000; bottom:190px; left:11px;">
+      <div class="" style="position: fixed; z-index: 1000; bottom:180px; left:11px;">
         <a ng-if="productsToRemove.length" ng-click="clearSelection()"
            class="btn btn-info btn-fab btn-fab-mini text-left well well-sm"
            title="Clear selection">
           <i class="material-icons fa fa-ban"></i>
         </a>
       </div>
-      <div class="" style="position: fixed; z-index: 1000; bottom:250px; left:11px;">
+      <div class="" style="position: fixed; z-index: 1000; bottom:240px; left:11px;">
         <a ng-if="productsToRemove.length" ng-click="selectAll()"
            class="btn btn-link btn-fab btn-fab-mini text-left well well-sm"
            title="Select all">
@@ -91,11 +91,11 @@
       <uib-pagination total-items="$parent.count"
                       num-pages="$parent.pagesCount"
                       ng-model="$parent.page"
-                      max-size="10"
-                      first-text="<<"
-                      last-text=">>"
-                      next-text=">"
-                      previous-text="<"
+                      max-size="8"
+                      first-text="&lt;&lt;"
+                      last-text="&gt;&gt;"
+                      next-text="&gt;"
+                      previous-text="&lt;"
                       items-per-page="$parent.query.limit"
                       rotate="true"
                       ng-change="$parent.changePage()"

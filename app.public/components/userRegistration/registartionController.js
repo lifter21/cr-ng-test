@@ -71,11 +71,9 @@ app
         };
 
         $scope.checkUsername = function () {
-          //$scope.user.username
         };
 
         $scope.checkEmail = function () {
-
         };
 
         $scope.$on('$destroy', function () {
