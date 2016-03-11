@@ -1,5 +1,19 @@
 var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngAnimate', 'ngSanitize'])
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    //initialize get if not there
+    if (!$httpProvider.defaults.headers.get) {
+      $httpProvider.defaults.headers.get = {};
+    }
+
+    // Answer edited to include suggestions from comments
+    // because previous version of code introduced browser-related errors
+
+    //disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
+    // extra
+    $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+    $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+
     $.material.init();
 
     //$locationProvider.html5Mode({
@@ -171,7 +185,7 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', '
         // do something on error
         var $state = $injector.get('$state');
         var isPublicState = _.includes(pub_states, $state.current.url);
-        
+
         if (rejection.status == 401 && !isPublicState) {
           return $state.go('app.login');
         }
@@ -179,7 +193,7 @@ var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', '
         if (rejection.status === 404) {
           return $state.go('app.404');
         }
-        
+
         return $q.reject(rejection);
       }
     };

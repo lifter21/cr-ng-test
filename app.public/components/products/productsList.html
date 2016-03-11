@@ -12,7 +12,9 @@
         <a ng-if="productsToRemove.length" ng-click="removeSelected()"
            class="btn btn-danger btn-fab btn-fab-mini text-left well well-sm"
            title="Add new item">
-          <h6 style="position: fixed; top:5px; right: 2px;">{{countToDelete}}</h6>
+          <h6 class="badge"
+              style="position: fixed; top:-15px; right: -10px; color: #fff; background-color: darkslategray;">
+            {{countToDelete}}</h6>
           <i class="material-icons fa fa-trash-o"></i>
         </a>
       </div>

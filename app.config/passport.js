@@ -36,11 +36,13 @@ module.exports = function (app, passport) {
       if (err) {
         return done(err);
       }
+
       if (!user || !user.validPassword(password)) {
         return done(null, false, {
           message: 'Incorrect login data.'
         });
       }
+
       return done(null, user);
     })
   }));
@@ -58,7 +60,6 @@ module.exports = function (app, passport) {
     },
     function (req, accessToken, refreshToken, profile, done) {
       if (!req.user) {
-        console.log(profile);
         var query = {
           $or: [
             {'facebook.id': profile.id},
@@ -91,9 +92,7 @@ module.exports = function (app, passport) {
 
               return done(null, _user)
             });
-          }
-
-          if (user && !user.facebook.id) {
+          } else if (user && !user.facebook.id) {
             user.facebook.id = profile.id;
             user.facebook.email = profile.emails[0].value;
             user.facebook.token = accessToken;
@@ -117,12 +116,12 @@ module.exports = function (app, passport) {
         req.user.lastname = req.user.lastname || profile.displayName.split(' ')[1];
         req.user.email = req.user.emai || profile.emails[0].value;
 
-        req.user.save(function (err) {
+        req.user.save(function (err, _user) {
           if (err) {
             return done(err);
           }
 
-          return done(null, req.user);
+          return done(null, _user);
         })
       }
     }
@@ -170,9 +169,7 @@ module.exports = function (app, passport) {
 
               return done(err, _user);
             });
-          }
-
-          if (user && !user.google.id) {
+          } else if (user && !user.google.id) {
             user.google.id = profile.id;
             user.google.email = profile.emails[0].value;
             user.google.token = accessToken;
@@ -195,12 +192,12 @@ module.exports = function (app, passport) {
         req.user.firstname = req.user.firstname || profile.displayName.split(' ')[0];
         req.user.lastname = req.user.lastname || profile.displayName.split(' ')[1];
 
-        req.user.save(function (err) {
+        req.user.save(function (err, _user) {
           if (err) {
             return done(err);
           }
 
-          return done(err, req.user);
+          return done(err, _user);
         });
       }
     }

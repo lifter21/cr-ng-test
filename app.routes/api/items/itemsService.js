@@ -21,6 +21,7 @@ module.exports = function (app) {
     var limit = limit || 0;
     var page = page || 0;
     var sortString = sortString || 'createdAt 1';
+
     Items.find(query)
       .populate('creator', 'username')
       .sort(sortString)
@@ -38,4 +39,3 @@ module.exports = function (app) {
 
   return Service;
 };
-
