@@ -121,7 +121,7 @@ module.exports = function (app) {
           return next(err);
         }
 
-        if (user && user.email !== reqUser.email) {
+        if (user && (user.email !== reqUser.email)) {
           profileEditErrors.email = ['Such email is already used...']
         }
 
@@ -137,7 +137,7 @@ module.exports = function (app) {
           return cb(err);
         }
 
-        if (user && user.username !== reqUser.username) {
+        if (user && (user.username !== reqUser.username)) {
           profileEditErrors.username = ['Such username is already used...'];
         }
 
@@ -171,12 +171,16 @@ module.exports = function (app) {
         }
       );
     } else {
-      req.user.save(function (err) {
-        if (err) {
-          return next(err);
-        }
+      basicProfileEdit(function (err, profileEditErrors, reqUser) {
+        reqUser.username = req.form.username;
+        reqUser.email = req.form.email;
+        reqUser.save(function (err) {
+          if (err) {
+            return next(err);
+          }
 
-        return res.json(req.user);
+          return res.json(req.user);
+        })
       })
     }
   });

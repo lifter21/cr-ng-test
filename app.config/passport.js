@@ -111,14 +111,14 @@ module.exports = function (app, passport) {
         req.user.facebook.email = profile.emails[0].value;
         req.user.firstname = req.user.firstname || profile.displayName.split(' ')[0];
         req.user.lastname = req.user.lastname || profile.displayName.split(' ')[1];
-        req.user.email = req.user.emai || profile.emails[0].value;
+        req.user.email = req.user.email || profile.emails[0].value;
 
         req.user.save(function (err, _user) {
           if (err) {
             return done(err);
           }
 
-          return done(null, _user);
+          return done(null, req.user);
         })
       }
     }
@@ -194,7 +194,7 @@ module.exports = function (app, passport) {
             return done(err);
           }
 
-          return done(err, _user);
+          return done(err, req.user);
         });
       }
     }
