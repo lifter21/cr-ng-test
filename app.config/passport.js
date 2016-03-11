@@ -14,7 +14,6 @@ module.exports = function (app, passport) {
     done(null, user._id);
   });
 
-  // TODO: check req.user attributes
   passport.deserializeUser(function (id, done) {
     Users.findById(id, '-local.passwordHash -local.passwordSalt -facebook.token -google.token', function (err, user) {
       done(err, user);
@@ -46,8 +45,6 @@ module.exports = function (app, passport) {
       return done(null, user);
     })
   }));
-
-//  TODO: try to refactor it
 
 //  FACEBOOK STRATEGY
 

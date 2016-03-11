@@ -103,7 +103,7 @@ module.exports = function (app) {
     });
   });
 
-  // TODO: try to refactor it
+  // TODO: try to refactor it/move to users service
   // change user profile info
   app.put('/api/users/me/edit-profile', EditProfileForm, FormService.isValidForm, function (req, res, next) {
 

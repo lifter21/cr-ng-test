@@ -1,51 +1,8 @@
 'use strict';
+// express/app basic configuration
+var app = require('./app.core');
 
-var express = require('express'),
-  app = express();
-
-// @TODO: move to express config
-app.application = require('./app.config/application');
-
-var config = app.config = app.application.config;
-var container = app.container = app.application.container;
-var port = config.get('app:port');
-
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var passport = require('passport');
-
-var mongoose = container.get('Mongoose');
-var mongoSessionStore = require('connect-mongo')(session);
-
-//
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-// session config
-app.use(session({
-  secret: config.get('session:secret'),
-  cookie: {maxAge: 4 * 7 * 24 * 60 * 60 * 1000},  // 4 weeks
-  resave: true,
-  saveUninitialized: true,
-  store: new mongoSessionStore({
-    mongooseConnection: mongoose.connection
-  })
-}));
-
-// passport initalization
-app.use(passport.initialize());
-app.use(passport.session());
-
-// send public scripts and assets
-app.use(express.static(__dirname + '/app.public'));
-
-// --->
-
-// passport strategies
-require('./app.config/passport')(app, passport);
-
-// app routes
-require('./app.routes')(app, passport);
+var port = app.config.get('app:port');
 
 // send SPA (html5mode: on) index.html on every request
 //app.use('/', function (req, res, next) {
@@ -58,12 +15,13 @@ app.use(function (err, req, res, next) {
   next(err)
 });
 
+// log custom requests
 app.use(function (req, res, next) {
   console.log('-> ', req.url);
   next();
 });
 
-// hanlde unknown routes and XHR
+// handle unknown routes and XHR
 app.use(function (req, res) {
   if (req.xhr) {
     return res.status(404).sendFile(__dirname + '/app.public/404.html');
