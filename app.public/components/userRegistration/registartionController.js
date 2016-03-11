@@ -2,8 +2,10 @@ app
   .factory('UserRegistrationResource', function ($resource) {
     return $resource('/api/register', {},
       {
-        'updatePassword': {method: 'PUT', url: '/api/users/me/change-password'},
-        'updateProfile': {method: 'PUT', url: '/api/users/me/edit-profile'}
+        updatePassword: {method: 'PUT', url: '/api/users/me/change-password'},
+        updateProfile: {method: 'PUT', url: '/api/users/me/edit-profile'},
+        checkUsername: {method: 'GET', url: '/api/check-username'},
+        checkEmail: {method: 'GET', url: '/api/users/check-email'}
       }
     );
   })
@@ -66,6 +68,14 @@ app
                 $scope.formErrors = err.data;
               });
           }
+        };
+
+        $scope.checkUsername = function () {
+          //$scope.user.username
+        };
+
+        $scope.checkEmail = function () {
+
         };
 
         $scope.$on('$destroy', function () {

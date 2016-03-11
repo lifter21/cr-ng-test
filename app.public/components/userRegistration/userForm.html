@@ -1,107 +1,161 @@
 <div class="bs-component">
 
-  <form ng-submit='save()' novalidate class="">
-
+  <form role="form" name="regForm" ng-submit='save()' novalidate class="">
     <div class="form-group label-floating" ng-class="{'is-empty': !user.username, 'has-error' : formErrors.username}">
-    <label class="control-label">Your login</label>
+      <label class="control-label">Your login</label>
 
-    <div ng-if="!user._id">
-      <input type="text" class="form-control" ng-model='user.username' required>
+      <div ng-if="!user._id">
+        <input type="text" class="form-control" name="username"
+               ng-model='user.username' ng-change="checkUsername()" required>
+      </div>
+
+      <div ng-if="user._id">
+        <input type="text" class="form-control" name="username"
+               ng-model='user.username'
+               ng-change="checkUsername()"
+               ng-model-options="{ debounce: 1000 }" required>
+      </div>
+
+      <span class="text-danger" ng-if="formErrors.username"
+            ng-repeat='nameError in formErrors.username'>{{nameError}}<br/>
+      </span>
+
+      <span ng-if="regForm.username.$error.required && !regForm.username.$pristine" class="text-danger small">
+				Username is required.<br/>
+			</span>
+      <span class="material-input"></span>
     </div>
-
-    <div ng-if="user._id">
-      <input type="text" class="form-control disabled" ng-model='user.username' required>
-    </div>
-
-    <p class="text-danger" ng-if="formErrors.username" ng-repeat='nameError in formErrors.username'>{{nameError}}<br/>
-    </p>
-    <span class="material-input"></span>
-  </div>
 
     <div class="form-group label-floating" ng-class="{'is-empty': !user.firstname}">
-    <label class="control-label">First name</label>
-    <input class="form-control" ng-model='user.firstname' type="text">
-    <span class="material-input"></span>
-  </div>
+      <label class="control-label">First name</label>
+      <input class="form-control" ng-model='user.firstname' name="firstname" ng-maxlength="255" type="text">
+			<span ng-if="regForm.firstname.$error.maxlength"
+            class=" text-danger small">
+				First name is too large (max 255 signs).<br/>
+			</span>
+      <span class="material-input"></span>
+    </div>
 
-  <div class="form-group label-floating" ng-class="{'is-empty': !user.lastname}">
-    <label class="control-label">Last name</label>
-    <input class="form-control" ng-model='user.lastname' type="text">
-    <span class="material-input"></span>
-  </div>
+    <div class="form-group label-floating" ng-class="{'is-empty': !user.lastname}">
+      <label class="control-label">Last name</label>
+      <input class="form-control" ng-model='user.lastname' name="lastname" ng-maxlength="255" type="text">
+      <span ng-if="regForm.lastname.$error.maxlength"
+            class=" text-danger small">
+				Last name is too large (max 255 signs).<br/>
+			</span>
+      <span class="material-input"></span>
+    </div>
 
     <div class="form-group label-floating" ng-class="{'is-empty': !user.email, 'has-error' : formErrors.email}">
-    <label class="control-label">E-mail...</label>
-    <input type="email" class="form-control" ng-model='user.email' required>
-
-    <p class="help-block">A valid email contains an @ character</p><br>
-    <span class="text-danger" ng-if="formErrors.email"
+      <label class="control-label">E-mail</label>
+      <input type="email" class="form-control" ng-model='user.email'
+             ng-pattern="/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/" name="email" required>
+      <!--<p class="help-block">A valid email contains an @ character</p><br>-->
+      <span class="text-danger" ng-if="formErrors.email"
           ng-repeat='emailError in formErrors.email'>{{emailError}}<br/>
-    </span>
-    <span class="material-input"></span>
-  </div>
+      </span>
+      <span ng-if="regForm.email.$error.required && !regForm.email.$pristine" class="text-danger small">
+				E-mail is required.<br/>
+			</span>
+      <span ng-if="regForm.email.$error.pattern"
+            class=" text-danger small">
+				Invalid E-mail address<br/>
+			</span>
+      <span class="material-input"></span>
+    </div>
 
     <div class="form-group label-floating" ng-class="{'is-empty': !user.phone, 'has-error' : formErrors.email}">
-    <label class="control-label">Phone</label>
-    <input class="form-control" ng-model='user.phone' required type="string">
-
-    <p class="help-block">phone format: +380XXXXXXXXX</p>
-    <span class="text-danger" ng-if="formErrors.phone"
-          ng-repeat='phoneError in formErrors.phone'>
-      {{phoneError}}<br/>
-    </span>
-    <span class="material-input"></span>
-  </div>
-
-  <div ng-if="!user._id">
-    <div class="form-group label-floating is-empty" ng-class="{'has-error' : formErrors.password}">
-      <label class="control-label">Password</label>
-      <input class="form-control" ng-model='user.password' required type="password">
-      <span class="text-danger" ng-if="formErrors.password" ng-repeat='passError in formErrors.password'>
-        {{passError}}<br/>
+      <label class="control-label">Phone</label>
+      <input class="form-control" ng-model='user.phone' name="phone" ng-pattern="/^\+(380)\d{9}/" type="string">
+      <!--<p class="help-block">phone format: +380XXXXXXXXX</p>-->
+      <span class="text-danger" ng-if="formErrors.phone"
+            ng-repeat='phoneError in formErrors.phone'>
+        {{phoneError}}<br/>
       </span>
+      <span ng-if="regForm.phone.$error.pattern"
+            class=" text-danger small">
+				Invalid phone number (correct format is +380XXXXXXXXX)<br/>
+			</span>
       <span class="material-input"></span>
     </div>
 
-    <div class="form-group label-floating is-empty" ng-class="{'has-error' : formErrors.passConfirmation}">
-      <label class="control-label">Password confirmation</label>
-      <input class="form-control" ng-model='user.passConfirmation' required type="password">
-      <span class="text-danger" ng-if="formErrors.passConfirmation"
+    <div ng-if="!user._id">
+      <div class="form-group label-floating is-empty" ng-class="{'has-error' : formErrors.password}">
+        <label class="control-label">Password</label>
+        <input class="form-control" ng-model='user.password' name="password" minlength="6" maxlength="16" required
+               type="password">
+        <span class="text-danger" ng-if="formErrors.password" ng-repeat='passError in formErrors.password'>
+          {{passError}}<br/>
+        </span>
+        <span ng-if="regForm.password.$error.required && !regForm.password.$pristine" class="text-danger small">
+				  Password is required.<br/>
+			  </span>
+        <span ng-if="regForm.password.$error.minlength" class="text-danger small">
+				    Password min length is 6 signs.<br/>
+			    </span>
+          <span ng-if="regForm.password.$error.maxlength" class="text-danger small">
+				    Password max length is 16 signs.<br/>
+			    </span>
+        <span class="material-input"></span>
+      </div>
+
+      <div class="form-group label-floating is-empty" ng-class="{'has-error' : formErrors.passConfirmation}">
+        <label class="control-label">Password confirmation</label>
+        <input class="form-control" ng-model='user.passConfirmation' name="confirmation" required type="password">
+        <span class="text-danger" ng-if="formErrors.passConfirmation"
             ng-repeat='confError in formErrors.passConfirmation'>
-        {{confError}}<br/>
-      </span>
-      <span class="material-input"></span>
+           {{confError}}<br/>
+        </span>
+        <span ng-if="user.password !== user.passConfirmation" class="text-danger small">
+				    Password confirmation must be equal to Password<br/>
+			   </span>
+        <span class="material-input"></span>
+      </div>
     </div>
-  </div>
 
-    <div class="form-group bs-component" ng-if="user._id">
-    <span ng-show="$parent.showUpdateMessage" class="text-info">Password successfully updated</span>
-    <a class="btn btn-sm" ng-click="$parent.showPasswordForm = !$parent.showPasswordForm">
-      <i class="fa fa-edit">&nbsp;Edit password</i>
-    </a>
+    <div class="form-group" ng-if="user._id">
+      <span ng-show="$parent.showUpdateMessage" class="text-info">Password successfully updated</span>
+      <a class="btn btn-sm" ng-click="$parent.showPasswordForm = !$parent.showPasswordForm">
+        <i class="fa fa-edit">&nbsp;Edit password</i>
+      </a>
 
       <div ng-show="$parent.showPasswordForm" class="col-md-10 col-md-offset-1 ng-animate"
            ng-class="{'has-error' : passErrors.password}">
-      <div class="form-group label-floating is-empty">
-        <label class="control-label">New password</label>
-        <input class="form-control" ng-model='userPassword.password' required type="password">
-        <span class="text-danger" ng-repeat='passError in passErrors.password'>{{passError}}<br/></span>
-        <span class="material-input"></span>
-      </div>
+        <div class="form-group label-floating is-empty">
+          <label class="control-label">New password</label>
+          <input class="form-control" ng-model='userPassword.password' name="password" minlength="6" maxlength="16"
+                 required type="password">
+          <span class="text-danger" ng-repeat='passError in passErrors.password'>{{passError}}<br/></span>
+           <span ng-if="regForm.password.$error.required && !regForm.password.$pristine" class="text-danger small">
+				  Password is required.<br/>
+			  </span>
+        <span ng-if="regForm.password.$error.minlength" class="text-danger small">
+				    Password min length is 6 signs.<br/>
+			    </span>
+          <span ng-if="regForm.password.$error.maxlength" class="text-danger small">
+				    Password max length is 16 signs.<br/>
+			    </span>
+          <span class="material-input"></span>
+        </div>
 
-        <div class="form-group label-floating is-empty" ng-class="{'has-error' : passErrors.passConfirmation}">
-        <label class="control-label">Password confirmation</label>
-        <input class="form-control" ng-model='userPassword.passConfirmation' required type="password">
-        <span class="text-danger" ng-repeat='confError in passErrors.passConfirmation'>
-          {{confError}}<br/>
-        </span>
-        <span class="material-input"></span>
-      </div>
+        <div class="form-group label-floating is-empty"
+             ng-class="{'has-error' : passErrors.passConfirmation || userPassword.password !== userPassword.passConfirmation}">
+          <label class="control-label">Password confirmation</label>
+          <input class="form-control" ng-model='userPassword.passConfirmation' name="confirmation" required
+                 type="password">
+          <span class="text-danger" ng-repeat='confError in passErrors.passConfirmation'>
+            {{confError}}<br/>
+          </span>
+          <span ng-if="userPassword.password !== userPassword.passConfirmation" class="text-danger small">
+				    Password confirmation must be equal to Password<br/>
+			   </span>
+          <span class="material-input"></span>
+        </div>
         <a class="btn btn-sm center-block btn-raised" ng-click="updatePassword()">Update password</a>
+      </div>
     </div>
-  </div>
 
 
-  <button class="btn btn-primary btn-lg" type="submit">Confirm</button>
-</form>
+    <button class="btn btn-primary btn-lg" type="submit">Confirm</button>
+  </form>
 </div>

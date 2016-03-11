@@ -87,18 +87,18 @@
       </div>
 
     </div>
-    <div class="row text-center" ng-if="products.length">
-      <uib-pagination total-items="count"
-                      num-pages="pagesCount"
-                      ng-model="page"
+    <div class="row text-center" ng-if="pagesCount > 1">
+      <uib-pagination total-items="$parent.count"
+                      num-pages="$parent.pagesCount"
+                      ng-model="$parent.page"
                       max-size="10"
                       first-text="<<"
                       last-text=">>"
                       next-text=">"
                       previous-text="<"
-                      items-per-page="query.limit"
+                      items-per-page="$parent.query.limit"
                       rotate="true"
-                      ng-change="changePage()"
+                      ng-change="$parent.changePage()"
                       class="pagination-lg"
                       boundary-links="true"
                       force-ellipses="true"

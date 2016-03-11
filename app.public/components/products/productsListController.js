@@ -9,14 +9,6 @@ app
     });
   })
   .controller('ProductsListController', function ($scope, ProductsResource, $uibModal) {
-    $scope.query = {
-      page: 0,
-      limit: 10
-    };
-
-    $scope.productsShowLimits = [1, 10, 20, 50];
-    $scope.page = 1;
-
     // load products
 
     $scope.init = function () {
@@ -33,9 +25,16 @@ app
       });
     };
 
-    //$scope.init();
-
     // Limits products on page
+
+    $scope.productsShowLimits = [1, 10, 20, 50];
+
+    $scope.query = {
+      page: 0,
+      limit: 10
+    };
+
+    $scope.page = 1;
 
     $scope.changePage = function () {
       $scope.query.page = $scope.page - 1;
@@ -112,7 +111,7 @@ app
           })
           .catch(function (err) {
             console.log(err);
-          })
+          });
       }
     };
 
