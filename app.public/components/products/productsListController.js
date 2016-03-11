@@ -94,6 +94,12 @@ app
       $scope.productsToRemove = [];
     };
 
+    $scope.selectAll = function () {
+      $scope.productsToRemove = _.map($scope.products, function (product) {
+        return product._id
+      })
+    };
+
     // ----------------------
 
     // remove single product
