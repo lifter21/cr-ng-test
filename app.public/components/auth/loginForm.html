@@ -1,32 +1,42 @@
-<!--TODO: move to directive-->
 <div class="conainer">
   <div class="row">
     <div class="col-md-6 col-md-offset-3 text-center">
       <h3 class="header">Login</h3>
 
-      <!--TODO: add ng-validate-->
-
-      <form ng-submit='login()' novalidate role="form" class="inputs">
+      <form name="loginForm" ng-submit='login($event, loginForm.$valid)' novalidate role="form" class="inputs">
         <div class="text-danger" ng-if='loginError'>{{loginError}}</div>
 
         <div class="form-group label-static is-focused" ng-class="{'has-error': loginError}">
           <label class="control-label">E-mail or username</label>
-          <input class="form-control" id="username" ng-model='user.username' placeholder="E-mail" autofocus required
+          <input class="form-control" name="username" ng-model='user.username' placeholder="E-mail" autofocus required
                  type="text">
+          <span ng-if="loginForm.username.$error.required && !loginForm.username.$pristine" class="text-danger small">
+				    This field is required.<br/>
+			    </span>
           <span class="material-input"></span>
         </div>
 
         <div class="form-group label-static">
           <label class="control-label">Password</label>
-          <input class="form-control" id="userpass" ng-model='user.password' placeholder="Password..." required
-                 type="password" min="6" max="16">
+          <input class="form-control" name="userpass" ng-model='user.password' placeholder="Password..." required
+                 type="password" ng-minlength="6" ng-maxlength="16">
+          <span ng-if="loginForm.userpass.$error.required && !loginForm.userpass.$pristine" class="text-danger small">
+				    Password is required.<br/>
+			    </span>
+          <span ng-if="loginForm.userpass.$error.minlength" class="text-danger small">
+				    Password min length is 6 signs.<br/>
+			    </span>
+          <span ng-if="loginForm.userpass.$error.maxlength" class="text-danger small">
+				    Password max length is 16 signs.<br/>
+			    </span>
           <span class="material-input"></span>
         </div>
 
         <div class="form-group">
           <div class="checkbox">
             <label>
-              <input type="checkbox" ng-model="user.remember"><span class="checkbox-material"><span class="check"></span></span> Remember me
+              <input type="checkbox" ng-model="user.remember"><span class="checkbox-material"><span
+                class="check"></span></span> Remember me
               <span class="checkbox-material"></span>
               <span class="check"></span>
             </label>

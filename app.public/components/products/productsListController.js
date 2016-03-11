@@ -79,9 +79,9 @@ app
     }, true);
 
     $scope.removeSelected = function () {
-      if (confirm("Now you are going to delete " + $scope.countToDelete + ' items')) {
+      if (confirm("Now you are going to delete " + $scope.countToDelete + ' items.\n Are you shure?')) {
         ProductsResource.deleteMulti($scope.removeMultipleQuery, function (resp) {
-          $scope.productsToRemove = [];
+          $scope.clearSelection();
           $scope.init();
           console.log(resp);
         }, function (err) {
@@ -90,18 +90,24 @@ app
       }
     };
 
+    $scope.clearSelection = function () {
+      $scope.productsToRemove = [];
+    };
+
     // ----------------------
 
     // remove single product
 
     $scope.remove = function (product) {
-      product.$delete()
-        .then(function (resp) {
-          $scope.init();
-        })
-        .catch(function (err) {
-          console.log(err);
-        })
+      if (confirm('Now you are going to delete ' + product.title.toUpperCase() + ' item!\nAre you sure?')) {
+        product.$delete()
+          .then(function (resp) {
+            $scope.init();
+          })
+          .catch(function (err) {
+            console.log(err);
+          })
+      }
     };
 
     // ------------------------

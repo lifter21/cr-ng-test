@@ -12,20 +12,31 @@
         <a ng-if="productsToRemove.length" ng-click="removeSelected()"
            class="btn btn-danger btn-fab btn-fab-mini text-left well well-sm"
            title="Add new item">
-          <h6 class="badge"
-              style="position: fixed; top:-15px; right: -10px; color: #fff; background-color: darkslategray;">
-            {{countToDelete}}</h6>
+          <span class=""
+                style="position: relative; top:-25px; right: -12px; color: #fff; background-color: transparent; z-index: 100; font-size: 11px;">
+            {{countToDelete}}</span>
           <i class="material-icons fa fa-trash-o"></i>
+        </a>
+      </div>
+      <div class="" style="position: fixed; z-index: 1000; bottom:190px; left:11px;">
+        <a ng-if="productsToRemove.length" ng-click="clearSelection()"
+           class="btn btn-info btn-fab btn-fab-mini text-left well well-sm"
+           title="Clear selection">
+          <i class="material-icons fa fa-ban"></i>
         </a>
       </div>
     </div>
 
     <div class="row">
-      <span ng-if="!products.length" class="text-center text-info">
-          No items addet yet!
-       </span>
+      <div ng-if="!products.length" class="text-center">
+        <div class="alert alert-default" style="border: 1px solid lightgray;">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <b class=" text-info">No items added yet!</b>
+        </div>
 
-      <div class="row">
+      </div>
+
+      <div class="row" ng-if="products.length">
         <div class="pull-right text-center" style="width: 200px;">
           <span>Show on page:</span>
 
@@ -40,10 +51,10 @@
            ng-repeat="product in products">
         <div class="thumbnail well well-sm">
           <div class="caption">
-            <h3>{{product.title}}</h3>
+            <h3><a ui-sref="app.products.product({productId: product._id})">{{product.title}}</a></h3>
 
             <p>
-              <b>Price: </b><em>{{product.price | currency: '$'}}</em>
+              <b>Price: </b>{{product.price | currency: '$'}}
             </p>
 
             <p class="text-right">
@@ -69,7 +80,7 @@
       </div>
 
     </div>
-    <div class="row text-center">
+    <div class="row text-center" ng-if="products.length">
       <uib-pagination total-items="count"
                       num-pages="pagesCount"
                       ng-model="page"

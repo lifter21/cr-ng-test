@@ -1,3 +1,6 @@
+<div ng-if="show">
+  <a history-back pui-sref="app.products" class="btn btn-default btn-raised">Back</a>
+</div>
 <div class="panel panel-info">
   <div class="panel-body">
     <legend>{{product.title}}</legend>
@@ -6,6 +9,5 @@
     <p><b>Description:</b> {{product.description}}</p>
 
     <p><b>Added:</b> {{product.createdAt | date: 'fullDate'}}</p>
-    <a ng-click="ok()" class="btn btn-default btn-raised">Hide</a>
   </div>
 </div>

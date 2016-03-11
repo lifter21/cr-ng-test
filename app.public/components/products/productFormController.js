@@ -12,7 +12,10 @@ app
     };
   })
   .controller('ProductFormController', function ($scope, $state, ProductsResource) {
+    $scope.formTitle = 'Edit: ' + $scope.product.title;
+
     if (!$scope.product._id) {
+      $scope.formTitle = 'New item';
       $scope.product = new ProductsResource()
     }
 
@@ -30,29 +33,32 @@ app
       }
     };
 
-    $scope.save = function () {
-      if ($scope.product._id) {
-        $scope.product.$update()
-          .then(function (product) {
-            $scope.formErrors = null;
-            checkCB();
-          })
-          .catch(function (err) {
-            console.log(err);
-            $scope.formErrors = err.data;
-          })
-      } else {
-        $scope.product.$save()
-          .then(function (product) {
-            $scope.formErrors = null;
-            checkCB();
-          })
-          .catch(function (err) {
-            console.log(err);
-            $scope.formErrors = err.data
-          })
+    $scope.save = function ($event, isValid) {
+      if (($event.ctrlKey && $event.keyCode == 10) || ($event.type === 'submit')) {
+        if (isValid) {
+          if ($scope.product._id) {
+            $scope.product.$update()
+              .then(function (product) {
+                $scope.formErrors = null;
+                checkCB();
+              })
+              .catch(function (err) {
+                console.log(err);
+                $scope.formErrors = err.data;
+              })
+          } else {
+            $scope.product.$save()
+              .then(function (product) {
+                $scope.formErrors = null;
+                checkCB();
+              })
+              .catch(function (err) {
+                console.log(err);
+                $scope.formErrors = err.data
+              })
+          }
+        }
       }
     };
-
   })
 ;

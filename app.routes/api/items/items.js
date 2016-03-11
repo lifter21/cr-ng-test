@@ -13,7 +13,7 @@ module.exports = function (app) {
 
   var ItemForm = form(
     field('title').trim().required().maxLength(255),
-    field('price').trim().required().is(/^(\d{1,6})(\.){0,1}(\d{0,2})/),
+    field('price').trim().required().is(/^(\d{1,6})(\.\d{0,2})?$/),
     field('description').trim().required().maxLength(1000)
   );
 

@@ -8,19 +8,6 @@ app
     );
   })
 
-  // TODO: add checking username and email resources
-//.factory('EditUserPasswordResource', function ($resource) {
-//  return $resource('/api/users/me/change-password', {}, {update: {method: 'PUT'}});
-//})
-//
-//.factory('EditUserProfileResource', function ($resource) {
-//  return $resource('/api/users/me/edit-profile', {}, {update: {method: 'PUT'}});
-//})
-
-//.controller('UserRegistrationController', function ($scope, UserRegistrationResource) {
-//  $scope.user = new UserRegistrationResource();
-//})
-
   .directive('userForm', function () {
     return {
       restrict: 'AE',
