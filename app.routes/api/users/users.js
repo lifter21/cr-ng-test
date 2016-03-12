@@ -80,7 +80,49 @@ module.exports = function (app) {
     })
   });
 
-  // TODO add routes for email and username check
+  app.get('/api/check-username', function (req, res, next) {
+    var username = req.query.username;
+    var query = {
+      username: username
+    };
+
+    if (req.user && req.user.username === username) {
+      return res.json({ok: true});
+    }
+
+    Users.findOne(query).exec(function (err, user) {
+      if (err) {
+        return next(err);
+      }
+      if (user) {
+        return res.json({ok: false});
+      }
+
+      return res.json({ok: true});
+    });
+  });
+
+  app.get('/api/check-email', function (req, res, next) {
+    var email = req.query.email;
+    var query = {
+      email: email
+    };
+
+    if (req.user && req.user.email === email) {
+      return res.json({ok: true});
+    }
+
+    Users.findOne(query).exec(function (err, user) {
+      if (err) {
+        return next(err);
+      }
+      if (user) {
+        return res.json({ok: false});
+      }
+
+      return res.json({ok: true});
+    });
+  });
 
   // let user get and edit data only if user Authenticated
   app.use('/api/users/me', AuthService.isAuthenticated);

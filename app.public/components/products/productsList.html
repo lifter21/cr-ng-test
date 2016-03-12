@@ -9,24 +9,24 @@
         </a>
       </div>
       <div class="" style="position: fixed; z-index: 1000; bottom:120px; left:11px;">
-        <a ng-if="productsToRemove.length" ng-click="removeSelected()"
+        <a ng-if="productsToRemove.length" ng-click="$parent.removeSelected()"
            class="btn btn-danger btn-fab btn-fab-mini text-left well well-sm"
            title="Remove selected items">
-          <span class=""
+          <span ng-bind="countToDelete" class=""
                 style="position: relative; top:-25px; right: -12px; color: #fff; background-color: transparent; z-index: 100; font-size: 11px;">
-            {{countToDelete}}</span>
+          </span>
           <i class="material-icons fa fa-trash-o"></i>
         </a>
       </div>
       <div class="" style="position: fixed; z-index: 1000; bottom:180px; left:11px;">
-        <a ng-if="productsToRemove.length" ng-click="clearSelection()"
+        <a ng-if="productsToRemove.length" ng-click="$parent.clearSelection()"
            class="btn btn-info btn-fab btn-fab-mini text-left well well-sm"
            title="Clear selection">
           <i class="material-icons fa fa-ban"></i>
         </a>
       </div>
       <div class="" style="position: fixed; z-index: 1000; bottom:240px; left:11px;">
-        <a ng-if="productsToRemove.length" ng-click="selectAll()"
+        <a ng-if="productsToRemove.length" ng-click="$parent.selectAll()"
            class="btn btn-link btn-fab btn-fab-mini text-left well well-sm"
            title="Select all">
           <i class="material-icons fa fa-check-square-o"></i>
@@ -35,10 +35,10 @@
     </div>
 
     <div class="row">
-      <div ng-if="!products.length" class="text-center">
-        <div class="alert alert-default" style="border: 1px solid lightgray;">
+      <div ng-if="!products.length" class="text-center " ng-class="{hidden:!products.length}">
+        <div class="alert alert-default" style="border: 1px solid lightgray;" ng-cloak>
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <b class=" text-info">No items added yet!</b>
+          <b class="text-info">No items added yet!</b>
         </div>
 
       </div>
@@ -49,16 +49,16 @@
 
           <div togglable-buttons-panel class="btn-group btn-group-justified btn-group-raised">
             <a href="javascript:void(0)" class="btn" ng-repeat="limit in productsShowLimits" ng-click="setLimit(limit)"
-               ng-class="{active: query.limit === limit}">{{limit}}</a>
+               ng-class="{active: query.limit === limit}" ng-bind="limit"></a>
           </div>
         </div>
       </div>
       <div class=""
-           ng-class="{'col-xs-12 col-sm-6 col-md-3 col-lg-3': query.limit !==1,'col-md-6 col-md-offset-3 ': query.limit ===1 }"
+           ng-class="{'col-xs-12 col-sm-6 col-md-3 col-lg-3': query.limit !==1,'col-md-6 col-md-offset-3 ': query.limit === 1 }"
            ng-repeat="product in products">
         <div class="thumbnail well well-sm">
           <div class="caption">
-            <h3><a ui-sref="app.products.product({productId: product._id})">{{product.title}}</a></h3>
+            <h3><a ui-sref="app.products.product({productId: product._id})" ng-bind="product.title"></a></h3>
 
             <p>
               <b>Price: </b>{{product.price | currency: '$'}}
@@ -87,18 +87,18 @@
       </div>
 
     </div>
-    <div class="row text-center" ng-if="pagesCount > 1">
-      <uib-pagination total-items="$parent.count"
-                      num-pages="$parent.pagesCount"
-                      ng-model="$parent.page"
+    <div class="row text-center" ng-show="pagesCount > 1">
+      <uib-pagination total-items="count"
+                      num-pages="pagesCount"
+                      ng-model="page"
                       max-size="8"
                       first-text="&lt;&lt;"
                       last-text="&gt;&gt;"
                       next-text="&gt;"
                       previous-text="&lt;"
-                      items-per-page="$parent.query.limit"
+                      items-per-page="query.limit"
                       rotate="true"
-                      ng-change="$parent.changePage()"
+                      ng-change="changePage()"
                       class="pagination-lg"
                       boundary-links="true"
                       force-ellipses="true"

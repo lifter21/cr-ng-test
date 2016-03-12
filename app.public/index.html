@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{title}}</title>
+  <title ng-bind="title"></title>
 
   <!-- styles -->
 
@@ -96,7 +96,7 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="navbar">
+    <div class="collapse navbar-collapse" id="navbar" ng-cloak>
       <ul class="nav navbar-nav">
         <li ui-sref-active="active"><a ui-sref="app.home">Home</a></li>
         <li ui-sref-active="active"><a ui-sref="app.products">Products</a></li>

@@ -3,7 +3,7 @@
   <div class="panel-heading">Profile settings</div>
 
   <div class="panel-body">
-    <h3>{{user.fullName}}</h3>
+    <h3 ng-bind="user.fullName"></h3>
     <hr/>
 
     <!-- Edit profile -->
@@ -19,27 +19,27 @@
         <tbody>
         <tr>
           <td>Login</td>
-          <td><b>{{user.username}}</b></td>
+          <td><b ng-bind="user.username"></b></td>
         </tr>
         <tr>
           <td>Email</td>
-          <td><b>{{user.email}}</b></td>
+          <td><b ng-bind="user.email"></b></td>
         </tr>
         <tr>
           <td>Firstname</td>
-          <td><b>{{user.firstname}}</b></td>
+          <td><b ng-bind="user.firstname"></b></td>
         </tr>
         <tr>
           <td>Lastname</td>
-          <td><b>{{user.lastname}}</b></td>
+          <td><b ng-bind="user.lastname"></b></td>
         </tr>
         <tr>
           <td>Phone</td>
-          <td><b>{{user.phone}}</b></td>
+          <td><b ng-bind="user.phone"></b></td>
         </tr>
         <tr>
           <td>Registered</td>
-          <td><b>{{user.createdAt | date: 'fullDate'}}</b></td>
+          <td><b ng-bind="user.createdAt | date: 'fullDate'"></b></td>
         </tr>
         <tr>
           <td>FB connected</td>

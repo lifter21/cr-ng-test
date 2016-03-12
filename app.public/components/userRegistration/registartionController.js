@@ -5,7 +5,7 @@ app
         updatePassword: {method: 'PUT', url: '/api/users/me/change-password'},
         updateProfile: {method: 'PUT', url: '/api/users/me/edit-profile'},
         checkUsername: {method: 'GET', url: '/api/check-username'},
-        checkEmail: {method: 'GET', url: '/api/users/check-email'}
+        checkEmail: {method: 'GET', url: '/api/check-email'}
       }
     );
   })
@@ -69,11 +69,26 @@ app
               });
           }
         };
-
-        $scope.checkUsername = function () {
+        $scope.freeUsername = true;
+        $scope.freeEmail = true;
+        $scope.isFreeUsername = function () {
+          console.log($scope.user.username);
+          UserRegistrationResource.checkUsername({username: $scope.user.username}, function (resp) {
+            $scope.freeUsername = resp.ok;
+          }, function (err) {
+            console.log(err);
+          })
         };
 
-        $scope.checkEmail = function () {
+        $scope.isFreeEmail = function (isValid) {
+          if (isValid) {
+            UserRegistrationResource.checkEmail({email: $scope.user.email}, function (resp) {
+              $scope.freeEmail = resp.ok;
+            }, function (err) {
+              console.log(err);
+            })
+
+          }
         };
 
         $scope.$on('$destroy', function () {
