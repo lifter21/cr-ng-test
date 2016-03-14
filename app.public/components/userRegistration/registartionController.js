@@ -9,7 +9,6 @@ app
       }
     );
   })
-
   .directive('userForm', function () {
     return {
       restrict: 'AE',
@@ -17,11 +16,17 @@ app
         user: '=?'
       },
       templateUrl: '/components/userRegistration/userForm.html',
-      controller: function ($scope, $state, UserRegistrationResource, $filter, $timeout) {
+      controller: function ($scope, $state, UserRegistrationResource, $filter, $timeout, AuthService) {
         if (!$scope.user) {
           $scope.user = new UserRegistrationResource();
         }
 
+        // redirect to profile edit page if user is Authenticated
+        if ($state.current.name === 'app.registration' && AuthService.isUser()) {
+          $state.go('app.me.edit')
+        }
+
+        // edit password
         $scope.userPassword = new UserRegistrationResource();
         $scope.showPasswordForm = false;
 
@@ -40,9 +45,11 @@ app
           })
         };
 
+        // Creae/Update user profile
         $scope.save = function () {
           $scope.user.username = $filter('lowercase')($scope.user.username);
           $scope.user.email = $filter('lowercase')($scope.user.email);
+
           if ($scope.user._id) {
             $scope.profile = new UserRegistrationResource($scope.user);
 
@@ -69,31 +76,34 @@ app
               });
           }
         };
+
+        // Check username for availability
         $scope.freeUsername = true;
         $scope.freeEmail = true;
+
         $scope.isFreeUsername = function () {
           console.log($scope.user.username);
           UserRegistrationResource.checkUsername({username: $scope.user.username}, function (resp) {
             $scope.freeUsername = resp.ok;
           }, function (err) {
             console.log(err);
-          })
+          });
         };
 
+        // Check email for availability
         $scope.isFreeEmail = function (isValid) {
           if (isValid) {
             UserRegistrationResource.checkEmail({email: $scope.user.email}, function (resp) {
               $scope.freeEmail = resp.ok;
             }, function (err) {
               console.log(err);
-            })
-
+            });
           }
         };
 
         $scope.$on('$destroy', function () {
           $scope.user = undefined;
-        })
+        });
       }
     };
   })

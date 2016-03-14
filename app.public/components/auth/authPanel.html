@@ -1,27 +1,31 @@
-<ul class="nav navbar-nav navbar-right">
-    <li ui-sref-active="active">
-        <a ui-sref="app.me" ng-if="AuthService.isUser()"
-           ng-bind="AuthService.user.fullName" ng-cloak>
-        </a>
-    </li>
-    <li ui-sref-active="active">
-        <a ng-if="AuthService.isUser()" ui-sref="app.me.edit" ng-cloak>
-            <i class="fa fa-cog fa-lg"></i>
-        </a>
-    </li>
-    <li ui-sref-active="active">
-        <a ng-if="!AuthService.isUser()" ui-sref="app.login" ng-cloak>
-            Login
-        </a>
-    </li>
-    <li ui-sref-active="active">
-        <a ng-if="!AuthService.isUser()" ui-sref='app.registration' ng-cloak>
-            Sign Up
-        </a>
-    </li>
-    <li>
-        <a ng-if="AuthService.isUser()" ui-sref='app.logout' ng-class="{hidden: !AuthService.isUser()}">
-            Logout
-        </a>
-    </li>
+<ul class="nav navbar-nav navbar-right" ng-if="AuthService.isUser()" ng-cloak>
+  <li ui-sref-active="active">
+    <a ui-sref="app.me"
+       ng-bind="AuthService.user.fullName">
+    </a>
+
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="app.me.edit">
+      <i class="fa fa-cog fa-lg"></i>
+    </a>
+  </li>
+  <li>
+    <a ui-sref='app.logout'>
+      Logout
+    </a>
+  </li>
+
+</ul>
+<ul class="nav navbar-nav navbar-right" ng-if="!AuthService.isUser()" ng-cloak>
+  <li ui-sref-active="active">
+    <a ui-sref="app.login">
+      Login
+    </a>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref='app.registration'>
+      Sign Up
+    </a>
+  </li>
 </ul>
