@@ -1,3 +1,5 @@
+'use strict';
+
 app
   .factory('Login', function ($resource) {
     return $resource('/api/login');

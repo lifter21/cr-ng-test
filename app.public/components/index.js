@@ -1,3 +1,5 @@
+'use strict';
+
 var app = angular.module('ngTest', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngAnimate', 'ngSanitize'])
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
     //initialize get if not there

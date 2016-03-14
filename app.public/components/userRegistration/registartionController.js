@@ -1,3 +1,5 @@
+'use strict';
+
 app
   .factory('UserRegistrationResource', function ($resource) {
     return $resource('/api/register', {},

@@ -1,3 +1,5 @@
+'use strict';
+
 app
   .controller('ProductController', function ($scope, $stateParams, ProductsResource) {
     $scope.show = true;

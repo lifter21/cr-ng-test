@@ -1,3 +1,5 @@
+'use strict';
+
 app
   .directive('productForm', function () {
     return {
@@ -38,7 +40,7 @@ app
         if (isValid) {
           if ($scope.product._id) {
             $scope.product.$update()
-              .then(function (product) {
+              .then(function () {
                 $scope.formErrors = null;
                 checkCB();
               })
@@ -48,7 +50,7 @@ app
               })
           } else {
             $scope.product.$save()
-              .then(function (product) {
+              .then(function () {
                 $scope.formErrors = null;
                 checkCB();
               })
