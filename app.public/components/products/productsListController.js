@@ -1,13 +1,6 @@
 'use strict';
 
 app
-  .factory('ProductsResource', function ($resource) {
-    return $resource('/api/items/:itemId', {'itemId': '@_id'}, {
-      update: {method: 'PUT'},
-      getCount: {method: 'GET', url: '/api/items/count'},
-      deleteMulti: {method: 'DELETE', url: '/api/items'}
-    });
-  })
   .controller('ProductsListController', function ($scope, ProductsResource, $uibModal) {
     // load products
 
@@ -70,7 +63,7 @@ app
       return _.includes($scope.productsToRemove, id)
     };
 
-    $scope.$watch('productsToRemove', function (val) {
+    $scope.$watch('productsToRemove', function () {
       $scope.removeMultipleQuery = {
         items: $scope.productsToRemove
       };
@@ -106,7 +99,7 @@ app
     $scope.remove = function (product) {
       if (confirm('Now you are going to delete ' + product.title.toUpperCase() + ' item!\nAre you sure?')) {
         product.$delete()
-          .then(function (resp) {
+          .then(function () {
             $scope.init();
           })
           .catch(function (err) {
@@ -150,7 +143,7 @@ app
     // create/edit product in modal
 
     $scope.showProductForm = function (product) {
-      var product = product || {};
+      product = product || {};
 
       var modalInstance = $uibModal.open({
         templateUrl: '/components/products/productFormModal.html',
@@ -191,7 +184,7 @@ app
   });
 
 function modalOk($uibModalInstance, data) {
-  var data = data || undefined;
+  data = data || undefined;
   return function () {
     $uibModalInstance.close(data);
   }
@@ -202,4 +195,3 @@ function modalCancel($uibModalInstance) {
     $uibModalInstance.dismiss('cancel');
   }
 }
-;
